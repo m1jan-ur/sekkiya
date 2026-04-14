@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>한글 1000 · Korean Vocabulary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0a0b0e;--surface:#111318;--surface2:#181b23;--surface3:#1f2330;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --accent:#e8b96a;--accent-dim:rgba(232,185,106,0.12);
+  --teal:#6ec6d4;--teal-dim:rgba(110,198,212,0.12);
+  --green:#6adba0;--red:#e87272;
+  --text:#eceef4;--muted:#636878;--subtle:#3a3f50;
+  --r:12px;--r-sm:7px;--r-pill:999px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 900px 600px at 70% 0%,rgba(232,185,106,0.04) 0%,transparent 70%),
+             radial-gradient(ellipse 600px 400px at 0% 80%,rgba(110,198,212,0.03) 0%,transparent 70%);
+  pointer-events:none;z-index:0}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--subtle);border-radius:3px}
+
+/* ── HEADER ── */
+header{position:relative;z-index:10;max-width:1300px;margin:0 auto;
+  padding:2.2rem 2rem 0;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.logo h1{font-family:'Noto Serif KR',serif;font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:300;letter-spacing:-0.01em;color:#f5f0e8;line-height:1}
+.logo p{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-top:.3rem}
+.badge{background:var(--surface);border:1px solid var(--border);padding:.4rem .9rem;
+  border-radius:var(--r-pill);font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted)}
+.badge span{color:var(--accent)}
+
+/* ── TABS ── */
+.tabs{position:relative;z-index:10;max-width:1300px;margin:1.8rem auto 0;
+  padding:0 2rem;display:flex;gap:.45rem}
+.tab{background:none;border:1px solid var(--border);color:var(--muted);
+  padding:.6rem 1.3rem;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;
+  font-size:.83rem;font-weight:500;cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;gap:.45rem}
+.tab svg{width:15px;height:15px;flex-shrink:0}
+.tab:hover{color:var(--text);border-color:var(--border2)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#0a0b0e}
+
+/* ── MAIN ── */
+main{position:relative;z-index:10;max-width:1300px;margin:0 auto;padding:1.8rem 2rem 6rem}
+.panel{display:none}.panel.active{display:block}
+
+/* ══════════════════════════════════════
+   AUDIOBOOK
+══════════════════════════════════════ */
+.ab-grid{display:grid;grid-template-rows:auto auto auto;gap:1.2rem}
+
+/* Now Playing */
+.now-playing{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:2rem 2.2rem;display:grid;grid-template-columns:1fr 120px;gap:1.5rem;align-items:center;
+  position:relative;overflow:hidden;min-height:180px}
+.now-playing::after{content:'';position:absolute;right:-40px;top:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,185,106,0.06) 0%,transparent 70%);pointer-events:none}
+.np-num{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--accent);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+#np-korean{font-family:'Noto Serif KR',serif;font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:300;color:#f5f0e8;line-height:1.1;margin-bottom:.25rem}
+#np-roman{font-family:'DM Mono',monospace;font-size:.85rem;color:var(--teal);margin-bottom:.5rem}
+#np-eng{font-size:.95rem;font-weight:500;color:var(--text);margin-bottom:.9rem}
+#np-sent-kr{font-family:'Noto Serif KR',serif;font-size:.9rem;color:var(--muted);font-weight:300;margin-bottom:.2rem}
+#np-sent-en{font-size:.8rem;color:var(--muted);font-style:italic}
+
+/* Ring */
+.ring-wrap{position:relative;width:110px;height:110px;flex-shrink:0}
+.ring-wrap svg{width:110px;height:110px;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--surface3);stroke-width:5}
+.ring-arc{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;
+  stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset .5s ease}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-cur{font-family:'DM Mono',monospace;font-size:1.25rem;color:var(--accent);line-height:1}
+.ring-sep{font-size:.55rem;color:var(--subtle);margin:.1rem 0}
+.ring-tot{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted)}
+
+/* Controls bar */
+.ctrl-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem 1.8rem;display:flex;flex-direction:column;gap:1.1rem}
+.prog-row{display:flex;align-items:center;gap:.9rem}
+.t-lbl{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);min-width:2.5ch}
+.track{flex:1;height:3px;background:var(--surface3);border-radius:var(--r-pill);cursor:pointer;position:relative}
+.track-fill{height:100%;background:var(--accent);border-radius:var(--r-pill);width:0%;transition:width .3s ease;pointer-events:none}
+
+.btn-row{display:flex;align-items:center;justify-content:center;gap:.8rem}
+.cbtn{background:none;border:1px solid var(--border);color:var(--text);
+  width:40px;height:40px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .17s;font-size:.9rem}
+.cbtn:hover{border-color:var(--accent);color:var(--accent)}
+.cbtn:disabled{opacity:.25;cursor:not-allowed}
+.cbtn.play{width:52px;height:52px;background:var(--accent);border-color:var(--accent);color:#0a0b0e;font-size:1.1rem}
+.cbtn.play:hover{background:#f2ca80;border-color:#f2ca80}
+
+.ab-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.speed-grp{display:flex;align-items:center;gap:.5rem}
+.speed-lbl{font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace}
+.spd{background:none;border:1px solid var(--border);color:var(--muted);
+  padding:.22rem .5rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:.7rem;cursor:pointer;transition:all .15s}
+.spd.on{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.spd:hover{color:var(--text)}
+
+.lang-grp{display:flex;align-items:center;gap:.8rem;font-size:.75rem;color:var(--muted)}
+.lang-grp label{display:flex;align-items:center;gap:.35rem;cursor:pointer;transition:color .15s}
+.lang-grp label:has(input:checked){color:var(--accent)}
+.lang-grp input{accent-color:var(--accent);width:13px;height:13px;cursor:pointer}
+
+.status{font-family:'DM Mono',monospace;font-size:.68rem;padding:.22rem .65rem;
+  border-radius:var(--r-pill);background:var(--surface3);color:var(--muted);letter-spacing:.04em}
+.status.playing{background:rgba(106,219,160,0.12);color:var(--green)}
+.status.paused{background:var(--accent-dim);color:var(--accent)}
+
+/* Mini queue */
+.queue-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.queue-hdr{padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border)}
+.queue-hdr h3{font-size:.8rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.queue-list{height:220px;overflow-y:auto;padding:.5rem 0}
+.q-item{padding:.55rem 1.4rem;display:grid;grid-template-columns:2.5rem 1fr auto;gap:.7rem;
+  align-items:center;cursor:pointer;transition:background .15s;border-radius:0}
+.q-item:hover{background:var(--surface2)}
+.q-item.active{background:var(--accent-dim)}
+.q-item.active .q-num{color:var(--accent)}
+.q-num{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--subtle);text-align:right}
+.q-kr{font-family:'Noto Serif KR',serif;font-size:.9rem;color:var(--text);font-weight:300}
+.q-en{font-size:.72rem;color:var(--muted)}
+
+/* ══════════════════════════════════════
+   STUDY CARDS
+══════════════════════════════════════ */
+.study-top{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:220px}
+.search-wrap svg{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;color:var(--muted);pointer-events:none}
+#search{width:100%;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);padding:.65rem 1rem .65rem 2.4rem;border-radius:var(--r-sm);
+  font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s}
+#search::placeholder{color:var(--muted)}
+#search:focus{border-color:var(--border2)}
+.count-lbl{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);white-space:nowrap}
+.count-lbl span{color:var(--accent)}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:1.3rem 1.4rem;transition:border-color .2s,transform .18s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;transition:opacity .2s}
+.card:hover::before{opacity:.6}
+.card-num{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--subtle);margin-bottom:.5rem}
+.card-kr{font-family:'Noto Serif KR',serif;font-size:1.5rem;font-weight:300;
+  color:#f5f0e8;margin-bottom:.2rem;line-height:1.2}
+.card-roman{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--teal);margin-bottom:.35rem}
+.card-eng{font-size:.88rem;font-weight:500;color:var(--text);margin-bottom:.9rem}
+.card-divider{height:1px;background:var(--border);margin-bottom:.8rem}
+.card-sent-kr{font-family:'Noto Serif KR',serif;font-size:.82rem;color:var(--muted);font-weight:300;margin-bottom:.2rem;line-height:1.5}
+.card-sent-en{font-size:.75rem;color:var(--subtle);font-style:italic;line-height:1.5;margin-bottom:.9rem}
+.card-btns{display:flex;gap:.5rem}
+.card-btn{background:none;border:1px solid var(--border);color:var(--muted);
+  padding:.35rem .75rem;border-radius:var(--r-sm);font-size:.72rem;cursor:pointer;
+  display:flex;align-items:center;gap:.35rem;transition:all .15s;font-family:'DM Sans',sans-serif}
+.card-btn:hover{border-color:var(--accent);color:var(--accent)}
+.card-btn.speaking{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+.card-btn svg{width:12px;height:12px}
+
+/* No results */
+.no-results{grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.9rem}
+
+/* Responsive */
+@media(max-width:700px){
+  .now-playing{grid-template-columns:1fr}
+  .ring-wrap{display:none}
+  .cards-grid{grid-template-columns:1fr}
+  header,main,.tabs{padding-left:1rem;padding-right:1rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>한글</h1>
+    <p>1000 Korean Words</p>
+  </div>
+  <div class="badge"><span id="total-count">1000</span> words · Web Speech Audio</div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('audiobook',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+    Audiobook
+  </button>
+  <button class="tab" onclick="switchTab('study',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Study Cards
+  </button>
+</div>
+
+<main>
+<!-- ═══ AUDIOBOOK PANEL ═══ -->
+<div id="panel-audiobook" class="panel active">
+  <div class="ab-grid">
+
+    <div class="now-playing">
+      <div>
+        <div class="np-num" id="np-num">Word 1 of 1000</div>
+        <div id="np-korean">가게</div>
+        <div id="np-roman">gage</div>
+        <div id="np-eng">shop</div>
+        <div id="np-sent-kr">가게에 가요.</div>
+        <div id="np-sent-en">I go to the shop.</div>
+      </div>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="45"/><circle class="ring-arc" id="ring-arc" cx="50" cy="50" r="45"/></svg>
+        <div class="ring-center">
+          <div class="ring-cur" id="ring-cur">1</div>
+          <div class="ring-sep">of</div>
+          <div class="ring-tot">1000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctrl-bar">
+      <div class="prog-row">
+        <span class="t-lbl" id="t-cur">1</span>
+        <div class="track" id="track" onclick="seekTo(event)">
+          <div class="track-fill" id="track-fill"></div>
+        </div>
+        <span class="t-lbl" id="t-tot">1000</span>
+      </div>
+      <div class="btn-row">
+        <button class="cbtn" id="btn-prev" onclick="prevWord()" title="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19,20 9,12 19,4"/><line x1="5" y1="4" x2="5" y2="20"/></svg>
+        </button>
+        <button class="cbtn" onclick="skipWords(-10)" title="-10">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 .49-3.54"/><text x="8" y="15" font-size="6" fill="currentColor" stroke="none" style="font-family:sans-serif">10</text></svg>
+        </button>
+        <button class="cbtn play" id="btn-play" onclick="togglePlay()">
+          <svg id="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+        <button class="cbtn" onclick="skipWords(10)" title="+10">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-.49-3.54"/></svg>
+        </button>
+        <button class="cbtn" id="btn-next" onclick="nextWord()" title="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="4" x2="19" y2="20"/></svg>
+        </button>
+      </div>
+      <div class="ab-bottom">
+        <div class="speed-grp">
+          <span class="speed-lbl">Speed</span>
+          <button class="spd" onclick="setSpeed(0.7,this)">0.7×</button>
+          <button class="spd on" onclick="setSpeed(1,this)">1×</button>
+          <button class="spd" onclick="setSpeed(1.3,this)">1.3×</button>
+          <button class="spd" onclick="setSpeed(1.6,this)">1.6×</button>
+        </div>
+        <div class="lang-grp">
+          <label><input type="checkbox" id="chk-roman" checked/><span>Romanization</span></label>
+          <label><input type="checkbox" id="chk-sent" checked/><span>Sentences</span></label>
+        </div>
+        <div class="status" id="ab-status">Ready</div>
+      </div>
+    </div>
+
+    <div class="queue-wrap">
+      <div class="queue-hdr">
+        <h3>Queue</h3>
+        <span class="badge" style="font-size:.65rem">Scroll to current</span>
+      </div>
+      <div class="queue-list" id="queue-list"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ STUDY PANEL ═══ -->
+<div id="panel-study" class="panel">
+  <div class="study-top">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search" placeholder="Search by Korean, English or romanization…" oninput="filterCards()"/>
+    </div>
+    <div class="count-lbl">Showing <span id="shown-count">1000</span> words</div>
+  </div>
+  <div class="cards-grid" id="cards-grid"></div>
+</div>
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA — all 1000 entries
+// format: [num, korean, romanization, english, sent_kr, sent_roman, sent_en]
+// ═══════════════════════════════════════════════════════
+const DATA = [
+[1,"가게","gage","shop","가게에 가요.","gage-e gayo.","I go to the shop."],
+[2,"가다","gada","to go","학교에 가요.","hakgyo-e gayo.","I go to school."],
+[3,"가격","gagyeok","price","가격이 얼마예요?","gagyeok-i eolmayeyo?","How much is it?"],
+[4,"가족","gajok","family","가족이 있어요.","gajok-i isseoyo.","I have a family."],
+[5,"감사합니다","gamsahamnida","thank you","도와줘서 감사합니다.","dowajwoseo gamsahamnida.","Thank you for helping."],
+[6,"같이","gachi","together","같이 갈래요?","gachi gallaeyo?","Want to go together?"],
+[7,"거기","geogi","there","거기 어디예요?","geogi eodi-yeyo?","Where is that place?"],
+[8,"건강","geongang","health","건강이 중요해요.","geongang-i jungyohaeyo.","Health is important."],
+[9,"계산","gyesan","payment","계산해 주세요.","gyesan-hae juseyo.","Please bill me."],
+[10,"고기","gogi","meat","고기 먹을래요?","gogi meogeullae-yo?","Do you want to eat meat?"],
+[11,"공항","gonghang","airport","공항에 가요.","gonghang-e gayo.","I go to the airport."],
+[12,"과일","gwail","fruit","과일 좋아해요.","gwail joahaeyo.","I like fruit."],
+[13,"교통","gyotong","transportation","교통이 편해요.","gyotong-i pyeonhaeyo.","Transportation is convenient."],
+[14,"구매","gumae","purchase","구매할게요.","gumae-halkkeyo.","I will purchase it."],
+[15,"그냥","geunyang","just","그냥 있어요.","geunyang isseoyo.","I'm just here."],
+[16,"기차","gicha","train","기차 타요.","gicha tayo.","I take the train."],
+[17,"길","gil","road","길을 잃었어요.","gil-eul ilheosseoyo.","I'm lost."],
+[18,"김치","kimchi","kimchi","김치 좋아해요.","kimchi joahaeyo.","I like kimchi."],
+[19,"나가다","nagada","to go out","밖에 나가요.","bakke nagayo.","I go outside."],
+[20,"나중에","najunge","later","나중에 봐요.","najunge bwayo.","See you later."],
+[21,"날씨","nalssi","weather","날씨가 좋아요.","nalssi-ga joayo.","The weather is nice."],
+[22,"남자","namja","man","그는 남자예요.","geuneun namja-yeyo.","He is a man."],
+[23,"내일","naeil","tomorrow","내일 만나요.","naeil mannayo.","See you tomorrow."],
+[24,"노래","norae","song","노래 불러요.","norae bulleoyo.","I sing a song."],
+[25,"누구","nugu","who","누구예요?","nugu-yeyo?","Who is it?"],
+[26,"다음","daeum","next","다음에 해요.","daeum-e haeyo.","Do it next time."],
+[27,"달걀","dalgyal","egg","달걀 먹어요.","dalgyal meogeoyo.","I eat an egg."],
+[28,"대학","daehak","university","대학에 다녀요.","daehak-e danyeoyo.","I attend university."],
+[29,"도와주다","dowajuda","to help","도와줄게요.","dowajulgeyo.","I will help you."],
+[30,"도시","dosi","city","도시에 살아요.","dosi-e salayo.","I live in the city."],
+[31,"돈","don","money","돈이 필요해요.","don-i piryohaeyo.","I need money."],
+[32,"도움","doum","help","도움이 필요해요.","doum-i piryohaeyo.","I need help."],
+[33,"도착","dochag","arrival","도착했어요.","dochag-haesseoyo.","I have arrived."],
+[34,"독서","dokseo","reading","독서 좋아해요.","dokseo joahaeyo.","I like reading."],
+[35,"동물","dongmul","animal","동물을 좋아해요.","dongmul-eul joahaeyo.","I like animals."],
+[36,"되다","doeda","to become","될 수 있어요.","doel su isseoyo.","It can be done."],
+[37,"드리다","deurida","to give (honorific)","드릴게요.","deurilgeyo.","I will give (to you)."],
+[38,"들어오다","deureooda","to enter","들어오세요.","deureo-oseyo.","Please come in."],
+[39,"들다","deulda","to lift / to cost","가방을 들어요.","gabang-eul deureoyo.","I lift the bag."],
+[40,"따뜻하다","ttatteuthada","to be warm","날씨가 따뜻해요.","nalssi-ga ttatteuthaeyo.","The weather is warm."],
+[41,"떡","tteok","rice cake","떡 먹을래요?","tteok meogeullae-yo?","Want to eat rice cake?"],
+[42,"라면","ramyeon","instant noodles","라면 먹을래요.","ramyeon meogeullae-yo.","I want to eat ramen."],
+[43,"레스토랑","reseutorang","restaurant","레스토랑 예약했어요.","reseutorang yeyakhaesseoyo.","I reserved a restaurant."],
+[44,"마시다","masida","to drink","물을 마셔요.","mul-eul masyeoyo.","I drink water."],
+[45,"마음","ma-eum","heart / mind","마음이 편해요.","ma-eum-i pyeonhaeyo.","My mind is calm."],
+[46,"만나다","mannada","to meet","친구를 만나요.","chingu-reul mannayo.","I meet a friend."],
+[47,"많다","manta","to be many","사람이 많아요.","saram-i manhayo.","There are many people."],
+[48,"맛있다","masitda","to be delicious","음식이 맛있어요.","eumsik-i masisseoyo.","The food is delicious."],
+[49,"먹다","meokda","to eat","밥을 먹어요.","bap-eul meogeoyo.","I eat a meal."],
+[50,"멋있다","meositda","to be cool / stylish","그 옷이 멋있어요.","geu ot-i meosisseoyo.","That outfit is cool."],
+[51,"모르다","moreuda","to not know","몰라요.","mollayo.","I don't know."],
+[52,"모임","moim","gathering / meeting","모임에 가요.","moim-e gayo.","I go to a meeting."],
+[53,"목욕","mokyok","bath","목욕할 거예요.","mokyok-hal geoyeyo.","I will take a bath."],
+[54,"물건","mulgeon","thing / item","물건을 샀어요.","mulgeon-eul sass-eoyo.","I bought an item."],
+[55,"미안합니다","mianhamnida","sorry","미안합니다, 늦었어요.","mianhamnida, neujeosseoyo.","Sorry, I'm late."],
+[56,"바다","bada","sea","바다에 가요.","bada-e gayo.","I go to the sea."],
+[57,"바쁘다","bappeuda","to be busy","오늘 바빠요.","oneul bappayo.","I'm busy today."],
+[58,"바로","baro","right away","바로 갈게요.","baro galgeyo.","I'll go right away."],
+[59,"반갑다","bangapda","to be glad","반가워요!","bangawoyo!","Nice to meet you!"],
+[60,"반찬","banchan","side dish","반찬 더 주세요.","banchan deo juseyo.","Please give more side dishes."],
+[61,"밤","bam","night","밤에 전화해요.","bam-e jeonhwahaeyo.","Call me at night."],
+[62,"배고프다","baegopeuda","to be hungry","배고파요.","baegopayo.","I'm hungry."],
+[63,"배우다","baeuda","to learn","한국어를 배워요.","hangug-eoreul baewoyo.","I learn Korean."],
+[64,"백화점","baekhwajeom","department store","백화점에 가요.","baekhwajeom-e gayo.","I go to the department store."],
+[65,"버스","beoseu","bus","버스 타요.","beoseu tayo.","I take the bus."],
+[66,"번역","beonyeok","translation","번역해 주세요.","beonyeok-hae juseyo.","Please translate."],
+[67,"번호","beonho","number","전화번호 알려 주세요.","jeonhwa-beonho allyeo juseyo.","Please tell me your phone number."],
+[68,"변화","byeonhwa","change","변화가 있어요.","byeonhwa-ga isseoyo.","There is a change."],
+[69,"병원","byeongwon","hospital","병원에 가요.","byeongwon-e gayo.","I go to the hospital."],
+[70,"보고서","bogoseo","report","보고서 작성했어요.","bogoseo jakseonghaesseoyo.","I wrote the report."],
+[71,"보통","botong","usually","보통 아침에 일어나요.","botong achim-e il-eonayo.","I usually wake up in the morning."],
+[72,"복잡하다","bokjaphada","to be complicated","길이 복잡해요.","gil-i bokjaphaeyo.","The road is crowded."],
+[73,"볼펜","bolpen","ballpoint pen","볼펜 있어요?","bolpen isseoyo?","Do you have a pen?"],
+[74,"부탁하다","butakhada","to ask a favor","부탁할게요.","butakhalgeyo.","I will ask a favor."],
+[75,"불고기","bulgogi","bulgogi (grilled beef)","불고기 맛있어요.","bulgogi masisseoyo.","Bulgogi is delicious."],
+[76,"비싸다","bissada","to be expensive","이거 비싸요.","igeo bissayo.","This is expensive."],
+[77,"비행기","bihaenggi","airplane","비행기 타요.","bihaenggi tayo.","I take the airplane."],
+[78,"빠르다","ppareuda","to be fast","버스가 빨라요.","beoseu-ga ppalrayo.","The bus is fast."],
+[79,"사과","sagwa","apple / apology","사과할게요.","sagwa-halgeyo.","I will apologize."],
+[80,"사람","saram","person","사람이 친절해요.","saram-i chinjeolhaeyo.","People are kind."],
+[81,"사진","sajin","photo","사진 찍어요.","sajin jjigeoyo.","I take a photo."],
+[82,"사전","sajeon","dictionary","사전 찾아요.","sajeon chajayo.","I look up in the dictionary."],
+[83,"산책","sanchaek","walk / stroll","공원에서 산책해요.","gongwon-eseo sanchaekhaeyo.","I take a walk in the park."],
+[84,"상점","sangjeom","store","상점 문 열었어요.","sangjeom mun yeoreosseoyo.","The store opened."],
+[85,"새롭다","saeropda","to be new","새로운 가방이에요.","saeroun gabang-ieyo.","It's a new bag."],
+[86,"생각","saenggak","thought / idea","생각해 볼게요.","saenggak-hae bolgeyo.","I will think about it."],
+[87,"생일","saengil","birthday","생일 축하해요.","saengil chukahaeyo.","Happy birthday."],
+[88,"서점","seojeom","bookstore","서점에 가요.","seojeom-e gayo.","I go to the bookstore."],
+[89,"선물","seonmul","gift","선물 고마워요.","seonmul gomawoyo.","Thank you for the gift."],
+[90,"설명","seolmyeong","explanation","설명해 주세요.","seolmyeong-hae juseyo.","Please explain."],
+[91,"성함","seongham","name (honorific)","성함이 어떻게 되세요?","seongham-i eotteoke doeseyo?","What is your name?"],
+[92,"세수","sesu","wash face","세수했어요.","sesu-haesseoyo.","I washed my face."],
+[93,"소리","sori","sound","소리 들려요.","sori deullyeoyo.","I can hear a sound."],
+[94,"소주","soju","soju (Korean drink)","소주 한 잔 주세요.","soju han jan juseyo.","Please give one glass of soju."],
+[95,"손님","sonnim","guest / customer","손님이 많아요.","sonnim-i manhayo.","There are many customers."],
+[96,"수영","suyeong","swimming","수영하러 가요.","suyeong-hareo gayo.","I go to swim."],
+[97,"수업","sueop","class / lesson","수업 시작해요.","sueop sijakhaeyo.","Class starts."],
+[98,"숙제","sukje","homework","숙제 했어요?","sukje haesseoyo?","Did you do your homework?"],
+[99,"순서","sunseo","order / sequence","순서대로 해요.","sunseo-daero haeyo.","Do it in order."],
+[100,"숟가락","sutgarak","spoon","숟가락 주세요.","sutgarak juseyo.","Please give a spoon."],
+[101,"숲","sup","forest","숲에서 걷어요.","sup-eseo geodeoyo.","I walk in the forest."],
+[102,"시간","sigan","time","시간이 있어요.","sigan-i isseoyo.","I have time."],
+[103,"시장","sijang","market","시장에 가요.","sijang-e gayo.","I go to the market."],
+[104,"시작","sijak","start","지금 시작해요.","jigeum sijakhaeyo.","Start now."],
+[105,"시험","siheom","exam","시험 준비해요.","siheom junbihaeyo.","I prepare for the exam."],
+[106,"신발","sinbal","shoes","신발 신어요.","sinbal sineoyo.","I wear shoes."],
+[107,"실수","silsu","mistake","실수했어요.","silsu-haesseoyo.","I made a mistake."],
+[108,"심심하다","simsimhada","to be bored","심심해요.","simsimhaeyo.","I'm bored."],
+[109,"싸다","ssada","to be cheap","이거 싸요.","igeo ssayo.","This is cheap."],
+[110,"쓰다","sseuda","to write / to use","편지 써요.","pyeonji sseoyo.","I write a letter."],
+[111,"아기","agi","baby","아기가 자요.","agi-ga jayo.","The baby sleeps."],
+[112,"아니요","aniyo","no","아니요, 괜찮아요.","aniyo, gwaenchana-yo.","No, it's okay."],
+[113,"아름답다","areumdapda","to be beautiful","풍경이 아름다워요.","punggyeong-i areumdawoyo.","The scenery is beautiful."],
+[114,"아래","arae","below","책상 아래 있어요.","chaeksang arae isseoyo.","It's under the desk."],
+[115,"아름","areum","beauty (name)","아름 씨, 안녕하세요.","Areum ssi, annyeonghaseyo.","Hello, Areum."],
+[116,"아침","achim","morning","아침 먹었어요?","achim meogeosseoyo?","Did you eat breakfast?"],
+[117,"안경","angyeong","glasses","안경 써요.","angyeong sseoyo.","I wear glasses."],
+[118,"안내","annae","guidance / information","안내해 주세요.","annae-hae juseyo.","Please give information."],
+[119,"안전","anjeon","safety","안전이 중요해요.","anjeon-i jungyohaeyo.","Safety is important."],
+[120,"알다","alda","to know","알고 있어요.","algo isseoyo.","I know."],
+[121,"약국","yakguk","pharmacy","약국에 가요.","yakguk-e gayo.","I go to the pharmacy."],
+[122,"약속","yaksok","promise / appointment","약속 있어요.","yaksok isseoyo.","I have an appointment."],
+[123,"양말","yangmal","socks","양말 신어요.","yangmal sineoyo.","I put on socks."],
+[124,"어깨","eokkae","shoulder","어깨 아파요.","eokkae apayo.","My shoulder hurts."],
+[125,"어디","eodi","where","어디에 가요?","eodi-e gayo?","Where are you going?"],
+[126,"어떤","eotteon","which / what kind","어떤 걸 원해요?","eotteon geol wonhaeyo?","Which one do you want?"],
+[127,"언제","eonje","when","언제 만날까요?","eonje mannalkkayo?","When shall we meet?"],
+[128,"얼굴","eolgul","face","얼굴이 밝아요.","eolgul-i balgayo.","Your face is bright."],
+[129,"엄마","eomma","mom","엄마 사랑해요.","eomma saranghaeyo.","I love you, Mom."],
+[130,"없다","eopda","to not exist / not have","돈이 없어요.","don-i eopseoyo.","I have no money."],
+[131,"여기","yeogi","here","여기 앉으세요.","yeogi anjeuseyo.","Please sit here."],
+[132,"여권","yeogwon","passport","여권 있어요?","yeogwon isseoyo?","Do you have a passport?"],
+[133,"여름","yeoreum","summer","여름에 더워요.","yeoreum-e deowoyo.","It's hot in summer."],
+[134,"여자","yeoja","woman","그녀는 여자예요.","geunyeoneun yeoja-yeyo.","She is a woman."],
+[135,"역사","yeoksa","history","역사 공부해요.","yeoksa gongbuhaeyo.","I study history."],
+[136,"역시","yeoksi","as expected","역시 맛있어요.","yeoksi masisseoyo.","As expected, it's delicious."],
+[137,"연락","yeollak","contact","연락 주세요.","yeollak juseyo.","Please contact me."],
+[138,"연필","yeonpil","pencil","연필 빌려 주세요.","yeonpil billyeo juseyo.","Please lend me a pencil."],
+[139,"열다","yeolda","to open","문을 열어요.","mun-eul yeoreoyo.","Open the door."],
+[140,"열심히","yeolsimhi","diligently","열심히 공부해요.","yeolsimhi gongbuhaeyo.","Study hard."],
+[141,"영화","yeonghwa","movie","영화 보러 가요.","yeonghwa boreo gayo.","I go to watch a movie."],
+[142,"오다","oda","to come","지금 올게요.","jigeum olgeyo.","I'll come now."],
+[143,"오렌지","orenji","orange (fruit)","오렌지 먹어요.","orenji meogeoyo.","I eat an orange."],
+[144,"오래","orae","long (time)","오래 기다렸어요.","orae gidaryeosseoyo.","I waited a long time."],
+[145,"오른쪽","oreunjjok","right (direction)","오른쪽으로 가세요.","oreunjjok-euro gaseyo.","Go to the right."],
+[146,"오늘","oneul","today","오늘 날씨 좋아요.","oneul nalssi joayo.","The weather is nice today."],
+[147,"온도","ondo","temperature","온도 낮아요.","ondo najayo.","The temperature is low."],
+[148,"외국인","oegugin","foreigner","외국인 환영해요.","oegugin hwanyeonghaeyo.","We welcome foreigners."],
+[149,"요리","yori","cooking","요리 잘해요.","yori jalhaeyo.","I cook well."],
+[150,"요청","yocheong","request","요청할게요.","yocheong-halkkeyo.","I will request it."],
+[151,"우산","usan","umbrella","우산 가져가요.","usan gajyeogayo.","Take an umbrella."],
+[152,"우리","uri","we / our","우리 집이에요.","uri jip-ieyo.","It's our home."],
+[153,"운동","undong","exercise","운동하러 가요.","undong-hareo gayo.","I go exercise."],
+[154,"운전","unjeon","driving","운전 조심하세요.","unjeon josim-haseyo.","Drive carefully."],
+[155,"울다","ulda","to cry","아기가 울어요.","agi-ga ureoyo.","The baby cries."],
+[156,"원하다","wonhada","to want","이거 원해요.","igeo wonhaeyo.","I want this."],
+[157,"월요일","woryoil","Monday","월요일에 만나요.","woryoil-e mannayo.","See you Monday."],
+[158,"위험","wiheom","danger","위험하니까 조심해요.","wiheom-hanikka josimhaeyo.","Be careful, it's dangerous."],
+[159,"유리","yuri","glass","유리 깨졌어요.","yuri kkaejyeosseoyo.","The glass is broken."],
+[160,"유명하다","yumyeonghada","to be famous","그 배우 유명해요.","geu baeu yumyeonghaeyo.","That actor is famous."],
+[161,"음악","eumak","music","음악 들어요.","eumak deureoyo.","I listen to music."],
+[162,"응답","eungdap","response","응답 기다려요.","eungdap gidaryeoyo.","I wait for a response."],
+[163,"의사","uisa","doctor","의사에게 가요.","uisa-ege gayo.","I go to the doctor."],
+[164,"의자","uija","chair","의자에 앉으세요.","uija-e anjeuseyo.","Please sit on the chair."],
+[165,"이것","igeot","this","이것 주세요.","igeot juseyo.","Please give me this."],
+[166,"이름","ireum","name","이름이 뭐예요?","ireum-i mwoyeyo?","What is your name?"],
+[167,"이사","isa","moving (house)","이사했어요.","isa-haesseoyo.","I moved."],
+[168,"이야기","iyagi","story / talk","이야기해요.","iyagihaeyo.","Let's talk."],
+[169,"이용","iyong","use / utilization","이용해 주세요.","iyong-hae juseyo.","Please use it."],
+[170,"이웃","iut","neighbor","이웃이 친절해요.","iut-i chinjeolhaeyo.","The neighbor is kind."],
+[171,"이해","ihae","understanding","이해했어요.","ihae-haesseoyo.","I understood."],
+[172,"인사","insa","greeting","인사 드립니다.","insa deurimnida.","I greet you."],
+[173,"인터넷","inteonet","internet","인터넷 연결돼요?","inteonet yeongyeol dwaeyo?","Is the internet connected?"],
+[174,"일","il","work / day","일하러 가요.","il-hareo gayo.","I go to work."],
+[175,"일어나다","ireonada","to get up","아침에 일어나요.","achim-e ireonayo.","I wake up in the morning."],
+[176,"일찍","iljjik","early","일찍 와요.","iljjik wayo.","Come early."],
+[177,"입다","ipda","to wear","옷을 입어요.","ot-eul ibeoyo.","I wear clothes."],
+[178,"입구","ipgu","entrance","입구는 저쪽이에요.","ipgu-neun jeojjok-ieyo.","The entrance is that way."],
+[179,"자다","jada","to sleep","일찍 자요.","iljjik jayo.","Sleep early."],
+[180,"자랑","jarang","pride / boast","자랑하지 마세요.","jaranghaji maseyo.","Don't boast."],
+[181,"자르다","jareuda","to cut","빵을 잘라요.","ppang-eul jallayo.","I cut the bread."],
+[182,"자주","jaju","often","자주 만나요.","jaju mannayo.","Let's meet often."],
+[183,"자전거","jajeongeo","bicycle","자전거 타요.","jajeongeo tayo.","I ride a bicycle."],
+[184,"작다","jakda","to be small","방이 작아요.","bang-i jakayo.","The room is small."],
+[185,"잘하다","jalhada","to do well","한국어 잘해요.","hangug-eo jalhaeyo.","You speak Korean well."],
+[186,"잡다","japda","to catch / hold","손을 잡아요.","son-eul jabayo.","Hold my hand."],
+[187,"장소","jangso","place","좋은 장소예요.","joheun jangso-yeyo.","It's a good place."],
+[188,"장학금","janghakgeum","scholarship","장학금 받았어요.","janghakgeum badasseoyo.","I received a scholarship."],
+[189,"재미있다","jaemiitda","to be fun","영화가 재미있어요.","yeonghwa-ga jaemiisseoyo.","The movie is fun."],
+[190,"저기","jeogi","over there","저기 보세요.","jeogi boseyo.","Look over there."],
+[191,"저녁","jeonyeok","evening / dinner","저녁 먹었어요?","jeonyeok meogeosseoyo?","Did you eat dinner?"],
+[192,"저희","jeohui","we (humble)","저희 집이에요.","jeohui jip-ieyo.","It's our home (humble)."],
+[193,"전기","jeongi","electricity","전기 나갔어요.","jeongi nagasseoyo.","The power went out."],
+[194,"전화","jeonhwa","phone / call","전화해 주세요.","jeonhwa-hae juseyo.","Please call me."],
+[195,"점심","jeomsim","lunch","점심 먹으러 가요.","jeomsim meogeureo gayo.","Let's go eat lunch."],
+[196,"정말","jeongmal","really","정말 고마워요.","jeongmal gomawoyo.","Thank you very much."],
+[197,"정원","jeongwon","garden","정원에서 쉬어요.","jeongwon-eseo swieoyo.","I rest in the garden."],
+[198,"정확하다","jeonghwakhada","to be accurate","정확한 정보예요.","jeonghwakhan jeongbo-yeyo.","It's accurate information."],
+[199,"제발","jebal","please (pleading)","제발 도와주세요.","jebal dowajuseyo.","Please help me."],
+[200,"제일","jeil","the most / best","제일 좋아요.","jeil joayo.","It's the best."],
+[201,"주소","juso","address","주소 알려 주세요.","juso allyeo juseyo.","Please tell me the address."],
+[202,"주문","jumun","order (purchase)","주문할게요.","jumun-halkkeyo.","I will order."],
+[203,"주말","jumal","weekend","주말에 쉬어요.","jumal-e swieoyo.","I rest on the weekend."],
+[204,"주차","jucha","parking","주차할 곳 있어요?","jucha-hal got isseoyo?","Is there a place to park?"],
+[205,"준비","junbi","preparation","준비됐어요?","junbi dwaesseoyo?","Are you ready?"],
+[206,"중요하다","jungyohada","to be important","건강이 중요해요.","geongang-i jungyohaeyo.","Health is important."],
+[207,"증명서","jeungmyeongseo","certificate","증명서 필요해요.","jeungmyeongseo piryohaeyo.","I need a certificate."],
+[208,"지갑","jigap","wallet","지갑 잃어버렸어요.","jigap ilheobeoryeosseoyo.","I lost my wallet."],
+[209,"지금","jigeum","now","지금 출발해요.","jigeum chulbalhaeyo.","I'm leaving now."],
+[210,"지역","jiyeok","area / region","이 지역 좋아요.","i jiyeok joayo.","This area is nice."],
+[211,"지하철","jihacheol","subway","지하철 타요.","jihacheol tayo.","I take the subway."],
+[212,"진짜","jinjja","really / true","진짜요?","jinjjayo?","Really?"],
+[213,"집","jip","house / home","집에 가요.","jip-e gayo.","I go home."],
+[214,"집중","jipjung","concentration","집중해 주세요.","jipjung-hae juseyo.","Please concentrate."],
+[215,"짧다","jjalbda","to be short","시간이 짧아요.","sigan-i jjalbayo.","Time is short."],
+[216,"차","cha","car / tea","차 마실래요?","cha masillaeyo?","Do you want tea?"],
+[217,"차다","chada","to be cold","물 차가워요.","mul chagawoyo.","The water is cold."],
+[218,"차량","charyang","vehicle","차량이 도착했어요.","charyang-i dochaghaesseoyo.","The vehicle has arrived."],
+[219,"찾다","chatda","to find","열쇠를 찾았어요.","yeolsweoreul chajasseoyo.","I found the key."],
+[220,"책","chaek","book","책 읽어요.","chaek ilgeo-yo.","I read a book."],
+[221,"책상","chaeksang","desk","책상 위에 있어요.","chaeksang wie isseoyo.","It's on the desk."],
+[222,"처음","cheoeum","first / beginning","처음 뵙겠습니다.","cheoeum boepgesseumnida.","Nice to meet you (formal)."],
+[223,"천천히","cheoncheonhi","slowly","천천히 말해 주세요.","cheoncheonhi malhae juseyo.","Please speak slowly."],
+[224,"청소","cheongso","cleaning","청소할게요.","cheongso-halkkeyo.","I will clean."],
+[225,"초대","chodae","invitation","초대해 주셔서 감사합니다.","chodaehae jusyeoseo gamsahamnida.","Thank you for inviting me."],
+[226,"초콜릿","chokollit","chocolate","초콜릿 좋아해요.","chokollit joahaeyo.","I like chocolate."],
+[227,"추억","chueok","memory","추억이 많아요.","chueok-i manhayo.","I have many memories."],
+[228,"추운","chuun","cold (adj)","오늘 추워요.","oneul chuwoyo.","It's cold today."],
+[229,"축하","chukha","congratulations","생일 축하해요.","saengil chukahaeyo.","Happy birthday."],
+[230,"출발","chulbal","departure","출발 준비됐어요.","chulbal junbi dwaesseoyo.","Ready to depart."],
+[231,"출근","chulgeun","going to work","출근했어요.","chulgeunhaesseoyo.","I went to work."],
+[232,"출입구","churipgu","entrance/exit","출입구는 저쪽이에요.","churipgu-neun jeojjok-ieyo.","The entrance is that way."],
+[233,"충분하다","chungbunhada","to be sufficient","시간이 충분해요.","sigan-i chungbunhaeyo.","There is enough time."],
+[234,"취미","chwimi","hobby","취미가 뭐예요?","chwimi-ga mwoyeyo?","What is your hobby?"],
+[235,"친구","chingu","friend","친구 만나러 가요.","chingu mannareo gayo.","I'm going to meet a friend."],
+[236,"친절하다","chinjeolhada","to be kind","직원들이 친절해요.","jigwondeul-i chinjeolhaeyo.","The staff are kind."],
+[237,"칫솔","chitsol","toothbrush","칫솔 가져왔어요.","chitsol gajyeowasseoyo.","I brought a toothbrush."],
+[238,"침대","chimdae","bed","침대에 누워요.","chimdae-e nuwoyo.","Lie down on the bed."],
+[239,"카드","kadeu","card","카드로 계산할게요.","kadeu-ro gyesan-halkkeyo.","I'll pay by card."],
+[240,"칼","kal","knife","칼 조심하세요.","kal josim-haseyo.","Be careful with the knife."],
+[241,"캠퍼스","kaempeoseu","campus","캠퍼스가 넓어요.","kaempeoseu-ga neolbayo.","The campus is large."],
+[242,"커피","keopi","coffee","커피 한 잔 주세요.","keopi han jan juseyo.","Please give one cup of coffee."],
+[243,"컴퓨터","keompyuteo","computer","컴퓨터 켜세요.","keompyuteo kyeoseyo.","Turn on the computer."],
+[244,"케이크","keikeu","cake","케이크 잘랐어요.","keikeu jallasseoyo.","I cut the cake."],
+[245,"코트","koteu","coat","코트 입으세요.","koteu ibeuseyo.","Please wear a coat."],
+[246,"콘서트","konseoteu","concert","콘서트에 가요.","konseoteu-e gayo.","I go to a concert."],
+[247,"콜라","kolla","cola","콜라 마실래요?","kolla masillaeyo?","Do you want cola?"],
+[248,"크다","keuda","to be big","집이 커요.","jip-i keoyo.","The house is big."],
+[249,"클래스","keullaeseu","class","클래스 시작해요.","keullaeseu sijakhaeyo.","Class starts."],
+[250,"키","ki","height","키가 커요.","ki-ga keoyo.","He/She is tall."],
+[251,"타다","tada","to ride / to burn","버스에 타요.","beoseu-e tayo.","I get on the bus."],
+[252,"타월","tawol","towel","타월 주세요.","tawol juseyo.","Please give a towel."],
+[253,"탁자","takja","table","탁자 위에 있어요.","takja wie isseoyo.","It's on the table."],
+[254,"탈의실","taluisil","changing room","탈의실 어디예요?","taluisil eodi-yeyo?","Where is the changing room?"],
+[255,"태풍","taepung","typhoon","태풍 온대요.","taepung ondaeyo.","A typhoon is coming."],
+[256,"택시","taegsi","taxi","택시 불러 주세요.","taegsi bulleo juseyo.","Please call a taxi."],
+[257,"토요일","toyoil","Saturday","토요일에 쉬어요.","toyoil-e swieoyo.","I rest on Saturday."],
+[258,"통화","tonghwa","phone call","통화 중이에요.","tonghwa jung-ieyo.","I'm on a call."],
+[259,"통역","tongyeok","interpretation","통역 필요해요.","tongyeok piryohaeyo.","I need an interpreter."],
+[260,"퇴근","toegeun","leaving work","퇴근했어요.","toegeunhaesseoyo.","I left work."],
+[261,"투표","tupyo","vote","투표하러 가요.","tupyo-hareo gayo.","I go to vote."],
+[262,"특별하다","teukbyeolhada","to be special","오늘은 특별해요.","oneul-eun teukbyeolhaeyo.","Today is special."],
+[263,"티켓","tiket","ticket","티켓 샀어요.","tiket sass-eoyo.","I bought a ticket."],
+[264,"파란색","paransaek","blue","파란색 좋아해요.","paransaek joahaeyo.","I like blue."],
+[265,"파티","pati","party","파티에 초대받았어요.","pati-e chodae-badasseoyo.","I was invited to a party."],
+[266,"팔","pal","arm","팔이 아파요.","pal-i apayo.","My arm hurts."],
+[267,"판매","panmae","sale","판매 중이에요.","panmae jung-ieyo.","It's on sale."],
+[268,"편의점","pyeonuijeom","convenience store","편의점 가요.","pyeonuijeom gayo.","I go to the convenience store."],
+[269,"편지","pyeonji","letter","편지 썼어요.","pyeonji sseosseoyo.","I wrote a letter."],
+[270,"평일","pyeongil","weekday","평일에 바빠요.","pyeongil-e bappayo.","I'm busy on weekdays."],
+[271,"포장","pojang","packaging / takeout","포장해 주세요.","pojang-hae juseyo.","Please pack it to go."],
+[272,"표","pyo","ticket / ballot","표 한 장 주세요.","pyo han jang juseyo.","Please give one ticket."],
+[273,"풍경","punggyeong","scenery","풍경이 아름다워요.","punggyeong-i areumdawoyo.","The scenery is beautiful."],
+[274,"프린터","peurinteo","printer","프린터 고장났어요.","peurinteo gojangnasseoyo.","The printer is broken."],
+[275,"피곤하다","pigonhada","to be tired","오늘 피곤해요.","oneul pigonhaeyo.","I'm tired today."],
+[276,"필요하다","piryo-hada","to be necessary","도움이 필요해요.","doum-i piryohaeyo.","I need help."],
+[277,"하나","hana","one","사과 하나 주세요.","sagwa hana juseyo.","Please give one apple."],
+[278,"하늘","haneul","sky","하늘이 맑아요.","haneul-i malgayo.","The sky is clear."],
+[279,"하루","haru","day","하루 종일 일했어요.","haru jongil ilhaesseoyo.","I worked all day."],
+[280,"학생","haksaeng","student","학생이에요.","haksaeng-ieyo.","I am a student."],
+[281,"학원","hagwon","academy / cram school","학원에 다녀요.","hagwon-e danyeoyo.","I attend an academy."],
+[282,"한국어","hangug-eo","Korean language","한국어 배우고 있어요.","hangug-eo baeugo isseoyo.","I'm learning Korean."],
+[283,"한식","hansik","Korean food","한식 좋아해요.","hansik joahaeyo.","I like Korean food."],
+[284,"할인","harin","discount","할인 있어요?","harin isseoyo?","Is there a discount?"],
+[285,"할머니","halmeoni","grandmother","할머니 뵈러 가요.","halmeoni bwoero gayo.","I go to see my grandmother."],
+[286,"할아버지","harabeoji","grandfather","할아버지 건강하세요.","harabeoji geonganghaseyo.","Grandfather, be healthy."],
+[287,"함께","hamkke","together","함께 가요.","hamkke gayo.","Let's go together."],
+[288,"해결","haegyeol","solution","해결 방법 알려 주세요.","haegyeol bangbeop allyeo juseyo.","Please tell me the solution."],
+[289,"해변","haebyeon","beach","해변에 가고 싶어요.","haebyeon-e gago sipeoyo.","I want to go to the beach."],
+[290,"행복하다","haengbokhada","to be happy","행복해 보여요.","haengbokhae boyeoyo.","You look happy."],
+[291,"행사","haengsa","event","행사에 참석해요.","haengsa-e chamseokhaeyo.","I attend the event."],
+[292,"허리","heori","waist / lower back","허리 아파요.","heori apayo.","My back hurts."],
+[293,"호텔","hotel","hotel","호텔 예약했어요.","hotel yeyakhaesseoyo.","I booked a hotel."],
+[294,"혼자","honja","alone","혼자 갈게요.","honja galkkeyo.","I'll go alone."],
+[295,"화장실","hwajangsil","restroom","화장실 어디예요?","hwajangsil eodi-yeyo?","Where is the restroom?"],
+[296,"화요일","hwayoil","Tuesday","화요일에 만나요.","hwayoil-e mannayo.","See you Tuesday."],
+[297,"확인","hwagin","confirmation","확인해 주세요.","hwagin-hae juseyo.","Please confirm."],
+[298,"환경","hwangyeong","environment","환경을 지켜요.","hwangyeong-eul jikyeoyo.","Protect the environment."],
+[299,"회식","hoesik","company dinner","오늘 회식 있어요.","oneul hoesik isseoyo.","There's a company dinner today."],
+[300,"회사","hoesa","company","회사에 다녀요.","hoesa-e danyeoyo.","I work at a company."],
+[301,"휴대폰","hyudaepon","mobile phone","휴대폰 잃어버렸어요.","hyudaepon ilheobeoryeosseoyo.","I lost my phone."],
+[302,"흐리다","heurida","to be cloudy","오늘은 흐려요.","oneul-eun heuryeoyo.","It's cloudy today."],
+[303,"힘들다","himdeulda","to be difficult / tiring","오늘 힘들었어요.","oneul himdeureosseoyo.","Today was hard."],
+[304,"가까이","gakkai","nearby","가까이 와요.","gakkai wayo.","Come closer."],
+[305,"가끔","gakkeum","sometimes","가끔 영화 봐요.","gakkeum yeonghwa bwayo.","I sometimes watch movies."],
+[306,"가득","gadeuk","full","컵이 가득해요.","keop-i gadeukhaeyo.","The cup is full."],
+[307,"가볍다","gabyeopda","to be light","가방이 가벼워요.","gabang-i gabyeowoyo.","The bag is light."],
+[308,"가슴","gaseum","chest / heart","가슴이 아파요.","gaseum-i apayo.","My chest hurts."],
+[309,"가이드","gaideu","guide","가이드가 친절해요.","gaideu-ga chinjeolhaeyo.","The guide is kind."],
+[310,"가장","gajang","most","가장 좋아요.","gajang joayo.","It's the best."],
+[311,"간단하다","gandanhada","to be simple","방법이 간단해요.","bangbeop-i gandanhaeyo.","The method is simple."],
+[312,"간식","gansik","snack","간식 먹을래요?","gansik meogeullae-yo?","Want a snack?"],
+[313,"갈비","galbi","ribs (Korean dish)","갈비 맛있어요.","galbi masisseoyo.","Galbi is delicious."],
+[314,"감기","gamgi","cold (illness)","감기 걸렸어요.","gamgi geollyeosseoyo.","I caught a cold."],
+[315,"감동","gamdong","moved / touched","감동했어요.","gamdonghaesseoyo.","I was touched."],
+[316,"감사","gamsa","thanks","감사합니다, 정말요.","gamsahamnida, jeongmallyo.","Thank you, really."],
+[317,"강아지","gangaji","puppy","강아지 귀여워요.","gangaji gwiyeowoyo.","The puppy is cute."],
+[318,"개","gae","dog","개 산책해요.","gae sanchaekhaeyo.","Walk the dog."],
+[319,"개인","gaein","personal / individual","개인 정보예요.","gaein jeongbo-yeyo.","It's personal information."],
+[320,"객실","gaeksil","guest room","객실 예약했어요.","gaeksil yeyakhaesseoyo.","I reserved a room."],
+[321,"거울","geoul","mirror","거울 봐요.","geoul bwayo.","Look in the mirror."],
+[322,"건물","geonmul","building","건물이 높아요.","geonmul-i nopayo.","The building is tall."],
+[323,"걸다","geolda","to hang / to call","전화 걸었어요.","jeonhwa georeosseoyo.","I made a call."],
+[324,"결혼","gyeolhon","marriage","결혼 축하해요.","gyeolhon chukahaeyo.","Congratulations on your marriage."],
+[325,"경험","gyeongheom","experience","경험이 중요해요.","gyeongheom-i jungyohaeyo.","Experience is important."],
+[326,"계절","gyejeol","season","계절이 바뀌었어요.","gyejeol-i bakkwieosseoyo.","The season changed."],
+[327,"계획","gyehoek","plan","계획 있어요?","gyehoek isseoyo?","Do you have plans?"],
+[328,"고맙다","gomapda","to be thankful","정말 고맙습니다.","jeongmal gomapseumnida.","Thank you very much."],
+[329,"고장","gojang","breakdown","컴퓨터 고장났어요.","keompyuteo gojangnasseoyo.","The computer broke."],
+[330,"골목","golmok","alley","골목으로 들어가요.","golmok-euro deureogayo.","Enter the alley."],
+[331,"공부","gongbu","study","공부 열심히 해요.","gongbu yeolsimhi haeyo.","Study hard."],
+[332,"공연","gongyeon","performance","공연 보러 가요.","gongyeon boreo gayo.","Let's go see the show."],
+[333,"공원","gongwon","park","공원에서 만나요.","gongwon-eseo mannayo.","Meet at the park."],
+[334,"공짜","gongjja","free (no charge)","이거 공짜예요?","igeo gongjjayeyo?","Is this free?"],
+[335,"과자","gwaja","snack / cookie","과자 먹어요.","gwaja meogeoyo.","I eat snacks."],
+[336,"관심","gwansim","interest","관심 있어요.","gwansim isseoyo.","I'm interested."],
+[337,"광장","gwangjang","plaza","광장에서 만나요.","gwangjang-eseo mannayo.","Meet at the plaza."],
+[338,"교실","gyosil","classroom","교실에 들어가요.","gyosil-e deureogayo.","Enter the classroom."],
+[339,"구경","gugyeong","sightseeing","구경하러 가요.","gugyeong-hareo gayo.","Let's go sightseeing."],
+[340,"구입","guip","purchase","구입 완료했어요.","guip wanryohaesseoyo.","Purchase completed."],
+[341,"국","guk","soup","국 한 그릇 주세요.","guk han geureut juseyo.","Please give one bowl of soup."],
+[342,"국가","gukga","country","우리 국가예요.","uri gukga-yeyo.","It's our country."],
+[343,"국수","guksu","noodles","국수 먹고 싶어요.","guksu meokgo sipeoyo.","I want to eat noodles."],
+[344,"군인","gunin","soldier","군인입니다.","gunin-imnida.","I am a soldier."],
+[345,"굴","gul","oyster","굴 좋아해요.","gul joahaeyo.","I like oysters."],
+[346,"굽다","gupda","to bake / roast","빵을 구워요.","ppang-eul guwoyo.","Bake the bread."],
+[347,"귀","gwi","ear","귀가 아파요.","gwi-ga apayo.","My ear hurts."],
+[348,"귀엽다","gwiyeopda","to be cute","아기가 귀여워요.","agi-ga gwiyeowoyo.","The baby is cute."],
+[349,"그만","geuman","stop / enough","그만 해요.","geuman haeyo.","Stop it."],
+[350,"그림","geurim","picture / drawing","그림 그려요.","geurim geuryeoyo.","I draw a picture."],
+[351,"극장","geukjang","theater","극장에 가요.","geukjang-e gayo.","I go to the theater."],
+[352,"근처","geuncheo","nearby area","근처에 있어요.","geuncheo-e isseoyo.","It's nearby."],
+[353,"금요일","geumyoil","Friday","금요일에 만나요.","geumyoil-e mannayo.","See you Friday."],
+[354,"급하다","geuphada","urgent","급해요, 도와 주세요.","geuphaeyo, dowa juseyo.","It's urgent, please help."],
+[355,"기념일","ginyeomil","anniversary","기념일 축하해요.","ginyeomil chukahaeyo.","Happy anniversary."],
+[356,"기대하다","gidaehada","to expect","기대하고 있어요.","gidae-hago isseoyo.","I'm looking forward to it."],
+[357,"기름","gireum","oil","기름이 필요해요.","gireum-i piryohaeyo.","I need oil."],
+[358,"기분","gibun","mood","기분이 좋아요.","gibun-i joayo.","I feel good."],
+[359,"기술","gisul","skill / technology","기술이 발전했어요.","gisul-i baljeonhaesseoyo.","Technology advanced."],
+[360,"기억","gieok","memory","기억이 안 나요.","gieok-i an nayo.","I don't remember."],
+[361,"기차역","gichayeok","train station","기차역에서 만나요.","gichayeok-eseo mannayo.","Meet at the station."],
+[362,"기초","gicho","foundation / basics","기초부터 배워요.","gicho-buteo baewoyo.","Learn from the basics."],
+[363,"긴장","ginjang","nervousness","긴장하지 마세요.","ginjanghaji maseyo.","Don't be nervous."],
+[364,"깊다","gipda","to be deep","바다가 깊어요.","bada-ga gipeoyo.","The sea is deep."],
+[365,"깨끗하다","kkaekkeuthada","to be clean","방이 깨끗해요.","bang-i kkaekkeuthaeyo.","The room is clean."],
+[366,"깨다","kkaeda","to wake up / break","일찍 깼어요.","iljjik kkaesseoyo.","I woke up early."],
+[367,"껍질","kkeobjil","peel / shell","껍질 벗겨요.","kkeobjil beotgyeoyo.","Peel it."],
+[368,"꼭","kkok","surely / definitely","꼭 와 주세요.","kkok wa juseyo.","Please come for sure."],
+[369,"꽃","kkot","flower","꽃이 예뻐요.","kkot-i yeppeoyo.","The flower is pretty."],
+[370,"꿈","kkum","dream","꿈을 꿨어요.","kkum-eul kkwosseoyo.","I had a dream."],
+[371,"끝나다","kkeutnada","to end","수업이 끝났어요.","sueop-i kkeutnasseoyo.","Class ended."],
+[372,"나누다","nanuda","to divide / share","음식을 나눠요.","eumsik-eul nanwoyo.","Share the food."],
+[373,"나무","namu","tree","나무가 많아요.","namu-ga manhayo.","There are many trees."],
+[374,"나쁘다","nappeuda","to be bad","기분이 나빠요.","gibun-i nappayo.","I feel bad."],
+[375,"나오다","naoda","to come out","음식이 나왔어요.","eumsik-i nawasseoyo.","The food came out."],
+[376,"나중","najung","later","나중에 전화할게요.","najung-e jeonhwahalgeyo.","I'll call later."],
+[377,"난방","nanbang","heating","난방 켰어요.","nanbang kyeosseoyo.","I turned on the heater."],
+[378,"날개","nalgae","wing","새가 날개 펴요.","sae-ga nalgae pyeoyo.","The bird spreads its wings."],
+[379,"남기다","namgida","to leave behind","메시지 남겼어요.","mesiji namgyeosseoyo.","I left a message."],
+[380,"남편","nampyeon","husband","남편이 있어요.","nampyeon-i isseoyo.","I have a husband."],
+[381,"낮다","natda","to be low","음량이 낮아요.","eumryang-i natayo.","The volume is low."],
+[382,"내다","naeda","to pay / submit","돈을 냈어요.","don-eul naesseoyo.","I paid the money."],
+[383,"내려가다","naeryeogada","to go down","계단 내려가요.","gyedan naeryeogayo.","Go down the stairs."],
+[384,"내리다","naerida","to get off / to fall","버스에서 내려요.","beoseu-eseo naeryeoyo.","Get off the bus."],
+[385,"냄새","naemsae","smell","냄새가 좋아요.","naemsae-ga joayo.","The smell is nice."],
+[386,"냉장고","naengjanggo","refrigerator","냉장고 문 닫아요.","naengjanggo mun dadayo.","Close the fridge door."],
+[387,"넓다","neolda","to be wide","거실이 넓어요.","geosil-i neolbayo.","The living room is spacious."],
+[388,"네트워크","neteuwokeu","network","네트워크 연결돼요.","neteuwokeu yeongyeol dwaeyo.","The network is connected."],
+[389,"노력","noryeok","effort","노력할게요.","noryeok-halkkeyo.","I will try."],
+[390,"노트","noteu","notebook","노트에 적어요.","noteu-e jeogeoyo.","Write in the notebook."],
+[391,"놀다","nolda","to play","아이들이 놀아요.","ai-deul-i norayo.","Children play."],
+[392,"놀라다","nollada","to be surprised","깜짝 놀랐어요.","kkamjjak nollasseoyo.","I was surprised."],
+[393,"농장","nongjang","farm","농장에 가요.","nongjang-e gayo.","I go to the farm."],
+[394,"누르다","nureuda","to press","버튼을 누르세요.","beoteun-eul nureuseyo.","Press the button."],
+[395,"눈","nun","eye / snow","눈이 와요.","nun-i wayo.","It's snowing."],
+[396,"눈물","nunmul","tears","눈물이 나요.","nunmul-i nayo.","Tears come out."],
+[397,"느리다","neurida","to be slow","인터넷 느려요.","inteonet neuryeoyo.","The internet is slow."],
+[398,"늘다","neulda","to increase / improve","실력이 늘었어요.","sillyeok-i neureosseoyo.","My skill improved."],
+[399,"늦다","neutda","to be late","늦어서 죄송해요.","neujeoseo joesonghaeyo.","Sorry I'm late."],
+[400,"다르다","dareuda","to be different","이건 달라요.","igeon dallayo.","This is different."],
+[401,"환불","hwanbul","refund","환불해 주세요.","hwanbul-hae juseyo.","Please refund me."],
+[402,"활동","hwaldong","activity","활동에 참여해요.","hwaldong-e chamyeohaeyo.","I participate in activities."],
+[403,"활용","hwalyong","use / utilization","잘 활용하세요.","jal hwalyonghaseyo.","Use it well."],
+[404,"회복","hoebok","recovery","빨리 회복하세요.","ppalli hoebokhaseyo.","Get well soon."],
+[405,"효과","hyogwa","effect","효과가 좋아요.","hyogwa-ga joayo.","The effect is good."],
+[406,"휴식","hyusik","rest","잠깐 휴식해요.","jamkkan hyusikhaeyo.","Take a short rest."],
+[407,"흰색","huinsaek","white","흰색 좋아해요.","huinsaek joahaeyo.","I like white."],
+[408,"희망","huimang","hope","희망을 잃지 마요.","huimang-eul ilhji mayo.","Don't lose hope."],
+[409,"가르치다","gareuchida","to teach","선생님이 가르쳐요.","seonsaengnim-i gareuchyeoyo.","The teacher teaches."],
+[410,"가리키다","garikida","to point","저쪽을 가리켜요.","jeojjok-eul garikyeoyo.","Point over there."],
+[411,"가만히","gamani","quietly / still","가만히 있어요.","gamani isseoyo.","Stay still."],
+[412,"가사","gasa","lyrics / household chores","가사 외워요.","gasa oewoyo.","I memorize lyrics."],
+[413,"가속","gasok","acceleration","속도 가속해요.","sokdo gasokhaeyo.","Speed up."],
+[414,"가열","gayeol","heating","가열 중이에요.","gayeol jung-ieyo.","It's heating."],
+[415,"가정","gajeong","home / family","가정이 행복해요.","gajeong-i haengbokhaeyo.","The family is happy."],
+[416,"가치","gachi","value","가치가 있어요.","gachi-ga isseoyo.","It has value."],
+[417,"간호사","ganhosa","nurse","간호사 불러요.","ganhosa bulleoyo.","Call a nurse."],
+[418,"간편하다","ganpyeonhada","to be convenient","사용이 간편해요.","sayong-i ganpyeonhaeyo.","It's easy to use."],
+[419,"갈아입다","garaipda","to change clothes","옷 갈아입어요.","ot garaibeoyo.","Change your clothes."],
+[420,"감소","gamso","decrease","수요가 감소했어요.","suyo-ga gamsohaesseoyo.","Demand decreased."],
+[421,"감정","gamjeong","emotion","감정 표현해요.","gamjeong pyohyeonhaeyo.","Express your feelings."],
+[422,"강력하다","gangryeokhada","to be strong","효과가 강력해요.","hyogwa-ga gangryeokhaeyo.","The effect is strong."],
+[423,"개선","gaeseon","improvement","개선이 필요해요.","gaeseon-i piryohaeyo.","Improvement is needed."],
+[424,"개인적","gaeinjeok","personal","개인적 의견이에요.","gaeinjeok uigyeon-ieyo.","It's a personal opinion."],
+[425,"객관적","gaekgwanjeok","objective","객관적으로 봐요.","gaekgwanjeok-euro bwayo.","Look objectively."],
+[426,"거절","geojeol","refusal","정중히 거절했어요.","jeongjunghi geojeolhaesseoyo.","I politely refused."],
+[427,"건강검진","geonganggeomjin","health checkup","건강검진 받으세요.","geonganggeomjin badeuseyo.","Get a health checkup."],
+[428,"건의","geonui","suggestion","건의사항 있어요.","geonui-sahang isseoyo.","I have a suggestion."],
+[429,"걸음","georeum","step / pace","걸음이 빨라요.","georeum-i ppalrayo.","Your pace is fast."],
+[430,"결과","gyeolgwa","result","결과를 확인해요.","gyeolgwa-reul hwaginheyo.","Check the result."],
+[431,"결정","gyeoljeong","decision","결정했어요.","gyeoljeonghaesseoyo.","I decided."],
+[432,"경고","gyeonggo","warning","경고 메시지예요.","gyeonggo mesiji-yeyo.","It's a warning message."],
+[433,"경비","gyeongbi","security / guard fee","경비가 필요해요.","gyeongbi-ga piryohaeyo.","Security is needed."],
+[434,"경영","gyeongyeong","management","경영 공부해요.","gyeongyeong gongbuhaeyo.","I study management."],
+[435,"경찰","gyeongchal","police","경찰에 신고해요.","gyeongchal-e singohaeyo.","Report to the police."],
+[436,"경험자","gyeongheomja","experienced person","경험자에게 물어봐요.","gyeongheomja-ege mureobwayo.","Ask someone experienced."],
+[437,"계약","gye-yak","contract","계약서 작성해요.","gye-yakseo jakseonghaeyo.","Fill out the contract."],
+[438,"계좌","gyejwa","bank account","계좌번호 알려 주세요.","gyejwa-beonho allyeo juseyo.","Tell me the account number."],
+[439,"고객","gogaek","customer","고객님 환영합니다.","gogaek-nim hwanyeonghamnida.","Welcome, customer."],
+[440,"고민","gomin","worry","고민 있어요.","gomin isseoyo.","I have a worry."],
+[441,"고생","gosaeng","hardship","고생 많았어요.","gosaeng manhasseoyo.","You worked hard."],
+[442,"고용","goyong","employment","고용 계약했어요.","goyong gye-yakhaesseoyo.","I signed an employment contract."],
+[443,"공급","gonggeup","supply","공급이 부족해요.","gonggeup-i bujokhaeyo.","Supply is insufficient."],
+[444,"공정","gongjeong","fair / fair process","공정하게 처리해요.","gongjeonghage chorihaeyo.","Handle it fairly."],
+[445,"공휴일","gonghyuil","public holiday","공휴일 쉬어요.","gonghyuil swieoyo.","Rest on public holidays."],
+[446,"과정","gwajeong","process","과정을 설명해요.","gwajeong-eul seolmyeonghaeyo.","Explain the process."],
+[447,"관계","gwangye","relationship","관계가 좋아요.","gwangye-ga joayo.","The relationship is good."],
+[448,"관리","gwanri","management / care","관리 잘하세요.","gwanri jalhaseyo.","Take good care."],
+[449,"광고","gwanggo","advertisement","광고 봤어요.","gwanggo bwasseoyo.","I saw the ad."],
+[450,"교환","gyohwan","exchange","교환 가능해요?","gyohwan ganeunghaeyo?","Can I exchange it?"],
+[451,"구독","gudok","subscription","구독해 주세요.","gudokhae juseyo.","Please subscribe."],
+[452,"구조","gujo","rescue / structure","구조 요청했어요.","gujo yocheonghaesseoyo.","I requested rescue."],
+[453,"구체적","guchaejeok","concrete / specific","구체적으로 말해요.","guchaejeokeuro malhaeyo.","Speak specifically."],
+[454,"국제","gukje","international","국제 회의예요.","gukje hoeui-yeyo.","It's an international meeting."],
+[455,"군중","gunjung","crowd","군중이 모였어요.","gunjung-i moyeosseoyo.","A crowd gathered."],
+[456,"권리","gwonri","right / entitlement","권리를 지켜요.","gwonri-reul jikyeoyo.","Protect your rights."],
+[457,"귀국","gwiguk","return to country","내일 귀국해요.","naeil gwigukhaeyo.","I return home tomorrow."],
+[458,"규모","gyumo","scale / size","규모가 커요.","gyumo-ga keoyo.","The scale is large."],
+[459,"그룹","geurup","group","그룹에 가입했어요.","geurup-e gaiphaesseoyo.","I joined the group."],
+[460,"극복","geukbok","overcome","문제 극복했어요.","munje geukbokhaesseoyo.","I overcame the problem."],
+[461,"근로자","geunroja","worker","근로자 권리 중요해요.","geunroja gwonri jungyohaeyo.","Worker rights are important."],
+[462,"금액","geumaek","amount","금액 확인해 주세요.","geumaek hwaginhe juseyo.","Please confirm the amount."],
+[463,"급여","geubyeo","salary","급여 받았어요.","geubyeo badasseoyo.","I received my salary."],
+[464,"기부","gibu","donation","기부해 주세요.","gibuhae juseyo.","Please donate."],
+[465,"기밀","gimil","confidential","기밀 유지하세요.","gimil yujihaseyo.","Keep it confidential."],
+[466,"기반","giban","foundation / base","기반이 튼튼해요.","giban-i teuntunhaeyo.","The foundation is strong."],
+[467,"기부금","gibugeum","donation fund","기부금 모아요.","gibugeum moayo.","We collect donations."],
+[468,"기한","gihan","deadline","기한 지났어요.","gihan jinasseoyo.","The deadline passed."],
+[469,"기획","gihwaek","planning","기획서 작성해요.","gihwaekseo jakseonghaeyo.","Write the plan."],
+[470,"긴급","gingeup","emergency","긴급 상황이에요.","gingeup sanghwang-ieyo.","It's an emergency."],
+[471,"깊이","gipi","depth","깊이 생각해요.","gipi saenggakhaeyo.","Think deeply."],
+[472,"깨우다","kkaeuda","to wake someone","아기를 깨웠어요.","agi-reul kkaewosseoyo.","I woke the baby."],
+[473,"꼼꼼하다","kkomkkomhada","to be meticulous","꼼꼼히 확인해요.","kkomkkomhi hwaginheyo.","Check carefully."],
+[474,"꿀","kkul","honey","꿀 넣어 먹어요.","kkul neoeo meogeoyo.","Eat with honey."],
+[475,"끝내다","kkeutnaeda","to finish something","일을 끝냈어요.","il-eul kkeutnaesseoyo.","I finished the work."],
+[476,"나타나다","natanada","to appear","문제가 나타났어요.","munje-ga natanasseoyo.","A problem appeared."],
+[477,"나타내다","nataneda","to show / express","감정을 나타내요.","gamjeong-eul nataneyo.","Show your feelings."],
+[478,"난이도","nanido","difficulty level","난이도 높아요.","nanido nopayo.","The difficulty is high."],
+[479,"날카롭다","nalkaropda","to be sharp","칼이 날카로워요.","kal-i nalkarowoyo.","The knife is sharp."],
+[480,"남다","namda","to remain","음식이 남았어요.","eumsik-i namasseoyo.","Food remains."],
+[481,"남용","namyong","abuse / misuse","권한 남용 금지.","gwonhan namyong geumji.","No abuse of authority."],
+[482,"납부","napbu","payment / remittance","납부 완료했어요.","napbu wanryohaesseoyo.","Payment completed."],
+[483,"내부","naebu","internal","내부 점검해요.","naebu jeomgeomhaeyo.","Inspect internally."],
+[484,"내역","naeyeok","details / statement","내역 확인해요.","naeyeok hwaginheyo.","Check the details."],
+[485,"냉정하다","naengjeonghada","to be calm / cool-headed","냉정하게 생각해요.","naengjeonghage saenggakhaeyo.","Think calmly."],
+[486,"너비","neobi","width","너비가 넓어요.","neobi-ga neolbayo.","The width is wide."],
+[487,"넉넉하다","neokneokhada","to be ample","시간이 넉넉해요.","sigan-i neokneokhaeyo.","There's plenty of time."],
+[488,"네트워크2","neteuwokeu","network (check)","네트워크 점검해요.","neteuwokeu jeomgeomhaeyo.","Check the network."],
+[489,"노동","nodong","labor","노동 조건 좋아요.","nodong jogeon joayo.","Working conditions are good."],
+[490,"노선","noseon","route","노선 변경했어요.","noseon byeongyeonghaesseoyo.","The route changed."],
+[491,"논의","nonui","discussion","논의가 필요해요.","nonui-ga piryohaeyo.","Discussion is needed."],
+[492,"농업","nong-eop","agriculture","농업 발전했어요.","nong-eop baljeonhaesseoyo.","Agriculture developed."],
+[493,"누락","nurak","omission","누락된 항목 있어요.","nurakdoen hangmok isseoyo.","There's a missing item."],
+[494,"눈치","nunchi","social awareness","눈치 보지 마요.","nunchi boji mayo.","Don't worry about others' looks."],
+[495,"능력","neungnyeok","ability","능력 발휘하세요.","neungnyeok balhwihaseyo.","Show your ability."],
+[496,"다루다","daruda","to handle","문서를 다루어요.","munseo-reul darueoyo.","Handle the document."],
+[497,"다양성","dayangseong","diversity","다양성 존중해요.","dayangseong jonjunghaeyo.","Respect diversity."],
+[498,"단계","dankye","stage / step","단계별로 진행해요.","dankye-byeollo jinhaenghaeyo.","Proceed step by step."],
+[499,"단점","danjeom","drawback","단점도 있어요.","danjeom-do isseoyo.","There are drawbacks."],
+[500,"단호하다","danhohada","to be firm","단호하게 말해요.","danhohage malhaeyo.","Speak firmly."],
+[501,"단어","daneo","word","단어 외워요.","daneo oewoyo.","I memorize words."],
+[502,"단위","danwi","unit","단위 확인해요.","danwi hwaginheyo.","Check the unit."],
+[503,"단지","danji","only / merely","단지 궁금해요.","danji gunggeumhaeyo.","I'm just curious."],
+[504,"달력","dallyeok","calendar","달력에 표시해요.","dallyeok-e pyosihayo.","Mark it on the calendar."],
+[505,"담당","damdang","in charge","담당자에게 연락해요.","damdangja-ege yeollakhaeyo.","Contact the person in charge."],
+[506,"담배","dambae","cigarette","담배 피우지 마요.","dambae piuji mayo.","Don't smoke."],
+[507,"답변","dapbyeon","reply","답변 기다릴게요.","dapbyeon gidarilgeyo.","I'll wait for your reply."],
+[508,"당연하다","dangyeonhada","to be natural","당연하죠.","dangyeonhajyo.","Of course."],
+[509,"대답","daedap","answer","대답해 주세요.","daedap-hae juseyo.","Please answer."],
+[510,"대비","daebi","preparation","대비 잘하세요.","daebi jalhaseyo.","Prepare well."],
+[511,"대사","daesa","dialogue / ambassador","대사 말해요.","daesa malhaeyo.","Say the line."],
+[512,"대신","daesin","instead","제가 대신 할게요.","jega daesin halkkeyo.","I'll do it instead."],
+[513,"대중교통","daejunggyeotong","public transport","대중교통 이용해요.","daejunggyeotong iyonghaeyo.","Use public transport."],
+[514,"더럽다","deoreopda","to be dirty","방이 더러워요.","bang-i deoreowoyo.","The room is dirty."],
+[515,"더위","deowi","heat","더위 조심하세요.","deowi josim-haseyo.","Beware of the heat."],
+[516,"덕분에","deokbune","thanks to","덕분에 잘 됐어요.","deokbune jal dwaesseoyo.","It went well thanks to you."],
+[517,"도구","dogu","tool","도구 사용해요.","dogu sayonghaeyo.","Use the tool."],
+[518,"도시락","dosirak","lunchbox","도시락 싸요.","dosirak ssayo.","Pack a lunchbox."],
+[519,"도움말","doummal","help text","도움말 읽어보세요.","doummal ilgeo boseyo.","Read the help text."],
+[520,"독립","dongnip","independence","독립을 축하해요.","dongnip-eul chukahaeyo.","Congratulations on independence."],
+[521,"돌아가다","doraganda","to return","집으로 돌아가요.","jib-euro doragayo.","Return home."],
+[522,"돌보다","dolboda","to take care of","아이를 돌봐요.","ai-reul dolbwayo.","Take care of the child."],
+[523,"동의","dongui","agreement","동의하나요?","donguihanayo?","Do you agree?"],
+[524,"동전","dongjeon","coin","동전 있어요?","dongjeon isseoyo?","Do you have coins?"],
+[525,"동쪽","dongjjok","east","동쪽으로 가요.","dongjjok-euro gayo.","Go east."],
+[526,"돼지","dwaeji","pig","돼지 고기 먹어요.","dwaeji gogi meogeoyo.","I eat pork."],
+[527,"되찾다","doechatda","to recover","파일을 되찾았어요.","pail-eul doechajasseoyo.","I recovered the file."],
+[528,"두껍다","dukkeopda","to be thick","책이 두꺼워요.","chaek-i dukkeowoyo.","The book is thick."],
+[529,"두려움","duryeoum","fear","두려움 없어졌어요.","duryeoum eopseojyeosseoyo.","The fear is gone."],
+[530,"둘러보다","dulleoboda","to look around","가게를 둘러봐요.","gage-reul dulleobwayo.","Look around the shop."],
+[531,"둘째","duljjae","second (ordinal)","둘째 날이에요.","duljjae nal-ieyo.","It's the second day."],
+[532,"뒤쪽","dwijjok","back side","뒤쪽으로 가세요.","dwijjok-euro gaseyo.","Go to the back."],
+[533,"드라마","deurama","drama / TV show","드라마 봐요.","deurama bwayo.","I watch a drama."],
+[534,"들리다","deullida","to be heard","소리 들려요.","sori deullyeoyo.","I can hear a sound."],
+[535,"들어가다","deureogada","to go in","방에 들어가요.","bang-e deureogayo.","Enter the room."],
+[536,"등록","deungnok","registration","등록 완료했어요.","deungnok wanryohaesseoyo.","Registration completed."],
+[537,"따르다","ttareuda","to follow / pour","지시를 따르세요.","jisi-reul ttareuseyo.","Follow the instructions."],
+[538,"따라서","ttaraseo","therefore / accordingly","따라서 결정했어요.","ttaraseo gyeoljeonghaesseoyo.","Therefore, I decided."],
+[539,"딱","ttak","exactly / just","딱 맞아요.","ttak majayo.","It fits exactly."],
+[540,"때문에","ttaemune","because of","비 때문에 취소했어요.","bi ttaemune chwisohaesseoyo.","It was canceled because of rain."],
+[541,"또는","ttoneun","or","차 또는 버스 타요.","cha ttoneun beoseu tayo.","Take a car or bus."],
+[542,"뚜껑","ttukkeong","lid / cap","뚜껑 닫아 주세요.","ttukkeong dada juseyo.","Close the lid."],
+[543,"뜨겁다","tteugeopda","to be hot","음식이 뜨거워요.","eumsik-i tteugeowoyo.","The food is hot."],
+[544,"라디오","radio","radio","라디오 켜요.","radio kyeoyo.","Turn on the radio."],
+[545,"라이트","raiteu","light (lamp)","라이트 켜 주세요.","raiteu kyeo juseyo.","Please turn on the light."],
+[546,"락커","rakkeo","locker","락커에 넣으세요.","rakkeo-e neoeuseyo.","Put it in the locker."],
+[547,"랜선","raenseon","LAN cable","랜선 연결해요.","raenseon yeongyeolhaeyo.","Connect the LAN cable."],
+[548,"러시아","reosia","Russia","러시아에 가고 싶어요.","reosia-e gago sipeoyo.","I want to go to Russia."],
+[549,"레벨","rebel","level","레벨 올렸어요.","rebel ollyeosseoyo.","I raised the level."],
+[550,"로비","robi","lobby","로비에서 기다려요.","robi-eseo gidaryeoyo.","Wait in the lobby."],
+[551,"로봇","robot","robot","로봇이 움직여요.","robot-i umjigyeoyo.","The robot moves."],
+[552,"로컬","rokeol","local","로컬 음식 좋아해요.","rokeol eumsik joahaeyo.","I like local food."],
+[553,"로그인","rogeuin","login","로그인 해 주세요.","rogeuin hae juseyo.","Please log in."],
+[554,"롤러","rolleor","roller","롤러로 칠해요.","rolleoro chilhaeyo.","Paint with a roller."],
+[555,"루트","ruteu","route / root","루트 확인해요.","ruteu hwaginheyo.","Check the route."],
+[556,"리모컨","rimokeon","remote control","리모컨 어디예요?","rimokeon eodi-yeyo?","Where is the remote?"],
+[557,"마감","magam","deadline / closing","마감일 지났어요.","magam-il jinasseoyo.","The deadline passed."],
+[558,"마련","maryeon","preparation","자리 마련했어요.","jari maryeonhaesseoyo.","I prepared a seat."],
+[559,"마루","maru","floor (wooden)","마루에 앉아요.","maru-e anjayo.","Sit on the floor."],
+[560,"마술","masul","magic","마술 보여 주세요.","masul boyeo juseyo.","Show me a magic trick."],
+[561,"마음대로","ma-eumdaero","as one wishes","마음대로 하세요.","ma-eumdaero haseyo.","Do as you like."],
+[562,"마중","majung","meeting someone","역에서 마중 나가요.","yeok-eseo majung nagayo.","I'll meet you at the station."],
+[563,"마치다","machida","to finish","수업을 마쳤어요.","sueop-eul machyeosseoyo.","I finished the class."],
+[564,"마크","makeu","mark","중요한 부분에 마크해요.","jungyohan bubun-e makeuhaeyo.","Mark the important part."],
+[565,"막다","makda","to block","문을 막지 마세요.","mun-eul makji maseyo.","Don't block the door."],
+[566,"만들다","mandeulda","to make","케이크 만들어요.","keikeu mandeureoyo.","I make a cake."],
+[567,"만족","manjok","satisfaction","만족해요.","manjokhaeyo.","I'm satisfied."],
+[568,"만화","manhwa","comic","만화책 읽어요.","manhwachaek ilgeo-yo.","I read comics."],
+[569,"말다","malda","to stop / not do","그만 말아 주세요.","geuman mara juseyo.","Please stop it."],
+[570,"말씀","malsseum","(honorific) words","말씀해 주세요.","malsseum-hae juseyo.","Please speak (honorific)."],
+[571,"맑다","malkda","to be clear","하늘이 맑아요.","haneul-i malkayo.","The sky is clear."],
+[572,"맘","mam","heart / feeling (colloquial)","맘에 들어요.","mam-e deureoyo.","I like it."],
+[573,"맛집","matjip","famous restaurant","그곳은 맛집이에요.","geugos-eun matjip-ieyo.","That place is a famous restaurant."],
+[574,"매너","maeneo","manners","매너 지켜 주세요.","maeneo jikyeo juseyo.","Please keep good manners."],
+[575,"매일","maeil","every day","매일 운동해요.","maeil undonghaeyo.","I exercise every day."],
+[576,"매장","maejang","store / shop","매장에 들러요.","maejang-e deulleoyo.","Stop by the store."],
+[577,"맥주","maekju","beer","맥주 한 잔 주세요.","maekju han jan juseyo.","Please give one beer."],
+[578,"먹이","meogi","feed / food for animals","새에게 먹이 주세요.","sae-ege meogi juseyo.","Feed the bird."],
+[579,"멈추다","meomchuda","to stop","차가 멈췄어요.","cha-ga meomchwosseoyo.","The car stopped."],
+[580,"면","myeon","noodles / side","면 삶아요.","myeon salmayo.","Boil the noodles."],
+[581,"면접","myeonjeop","interview","면접 준비했어요.","myeonjeop junbihaesseoyo.","I prepared for the interview."],
+[582,"명단","myeongdan","list of names","명단 확인해요.","myeongdan hwaginheyo.","Check the name list."],
+[583,"명절","myeongjeol","holiday / festival","명절 잘 보내세요.","myeongjeol jal bonaeseyo.","Have a good holiday."],
+[584,"모두","modu","everyone / all","모두 모였어요.","modu moyeosseoyo.","Everyone gathered."],
+[585,"모델","model","model","모델 촬영했어요.","model chwalyeonghaesseoyo.","We did a model shoot."],
+[586,"모바일","mobail","mobile","모바일로 결제해요.","mobail-ro gyeoljehaeyo.","Pay by mobile."],
+[587,"모양","moyang","shape / form","모양이 예뻐요.","moyang-i yeppeoyo.","The shape is pretty."],
+[588,"목표","mokpyo","goal","목표 달성했어요.","mokpyo dalseonghaesseoyo.","I achieved the goal."],
+[589,"목적","mokjeok","purpose","목적이 뭐예요?","mokjeok-i mwoyeyo?","What is the purpose?"],
+[590,"몸무게","mommuge","weight","몸무게 재요.","mommuge jaeyo.","Measure your weight."],
+[591,"몸살","momsal","body ache","몸살 났어요.","momsal natseoyo.","I have body aches."],
+[592,"못하다","mothada","to be unable","노래 못해요.","norae mothaeyo.","I can't sing well."],
+[593,"무게","muge","weight","무게가 무거워요.","muge-ga mugeowoyo.","The weight is heavy."],
+[594,"무늬","munui","pattern","무늬가 예뻐요.","munui-ga yeppeoyo.","The pattern is pretty."],
+[595,"무덤","mudeom","grave","무덤 참배했어요.","mudeom chambaehaesseoyo.","I visited the grave."],
+[596,"무릎","mureup","knee","무릎 아파요.","mureup apayo.","My knee hurts."],
+[597,"무시하다","musihada","to ignore","무시하지 마세요.","musihaji maseyo.","Don't ignore it."],
+[598,"무역","muyeok","trade","무역 업무해요.","muyeok eobmuhaeyo.","I do trade work."],
+[599,"무료","muryo","free (no cost)","무료로 제공해요.","muryo-ro jegonghaeyo.","It's provided for free."],
+[600,"문제점","munjejeom","problem / issue","문제점 알려 주세요.","munjejeom allyeo juseyo.","Please tell me the issue."],
+[601,"문화","munhwa","culture","한국 문화 배워요.","hanguk munhwa baewoyo.","I learn Korean culture."],
+[602,"문서","munseo","document","문서 작성했어요.","munseo jakseonghaesseoyo.","I wrote the document."],
+[603,"문장","munjang","sentence","문장 읽어 주세요.","munjang ilgeo juseyo.","Please read the sentence."],
+[604,"물리다","mullida","to be bitten","개에게 물렸어요.","gae-ege mulryeosseoyo.","I was bitten by a dog."],
+[605,"물질","muljil","substance","물질 검사했어요.","muljil geomsa-haesseoyo.","We tested the substance."],
+[606,"미래","mirae","future","미래를 준비해요.","mirae-reul junbihaeyo.","Prepare for the future."],
+[607,"미술","misul","art","미술관에 가요.","misul-gwan-e gayo.","I go to the art museum."],
+[608,"미용실","miyongsil","hair salon","미용실 예약했어요.","miyongsil yeyakhaesseoyo.","I booked the salon."],
+[609,"미지수","mijisu","unknown factor","결과는 미지수예요.","gyeolgwa-neun mijisu-yeyo.","The result is uncertain."],
+[610,"민감하다","mingam-hada","to be sensitive","피부가 민감해요.","pibu-ga mingamhaeyo.","My skin is sensitive."],
+[611,"민주주의","minjujuui","democracy","민주주의 중요해요.","minjujuui jungyohaeyo.","Democracy is important."],
+[612,"바람","baram","wind / wish","바람이 불어요.","baram-i bureoyo.","The wind blows."],
+[613,"바로잡다","barojapda","to correct","오류를 바로잡아요.","oryu-reul barojabayyo.","Correct the error."],
+[614,"바코드","bakodeu","barcode","바코드 찍어 주세요.","bakodeu jjigeo juseyo.","Scan the barcode."],
+[615,"박물관","bakmulgwan","museum","박물관에 가요.","bakmulgwan-e gayo.","I go to the museum."],
+[616,"반복","banbok","repetition","반복 연습해요.","banbok yeonseuphaeyo.","Practice by repeating."],
+[617,"반응","baneung","reaction","반응이 좋아요.","baneung-i joayo.","The reaction is good."],
+[618,"발견","balgyeon","discovery","새로운 발견했어요.","saeroun balgyeonhaesseoyo.","I made a new discovery."],
+[619,"발표","balpyo","presentation","발표 준비했어요.","balpyo junbihaesseoyo.","I prepared the presentation."],
+[620,"발표하다","balpyohada","to announce / present","결과를 발표해요.","gyeolgwa-reul balpyohaeyo.","Announce the result."],
+[621,"밤새다","bamsaeda","to stay up all night","시험 때문에 밤새요.","siheom ttaemune bamsaeyo.","I stayed up for the exam."],
+[622,"방문","bangmun","visit","친구 집 방문했어요.","chingu jip bangmunhaesseoyo.","I visited a friend's home."],
+[623,"방해","banghae","disturbance","방해하지 마세요.","banghae-haji maseyo.","Don't disturb."],
+[624,"배달","baedal","delivery","음식 배달 왔어요.","eumsik baedal wasseoyo.","The food delivery arrived."],
+[625,"배려","baeryeo","consideration","서로 배려해요.","seoro baeryeohaeyo.","Consider each other."],
+[626,"배치","baechi","arrangement","의자 배치 바꿨어요.","uija baechi bakkwosseoyo.","I changed the chair arrangement."],
+[627,"백신","baeksin","vaccine","백신 맞았어요.","baeksin majasseoyo.","I got vaccinated."],
+[628,"버튼","beoteun","button","버튼을 눌러요.","beoteun-eul nulleoyo.","Press the button."],
+[629,"번역가","beonyeokka","translator","번역가에게 맡겼어요.","beonyeokka-ege matgyeosseoyo.","I entrusted it to a translator."],
+[630,"법률","beomnyul","law","법률 상담했어요.","beomnyul sangdamhaesseoyo.","I had legal advice."],
+[631,"보험","boheom","insurance","보험 가입했어요.","boheom gaiphaesseoyo.","I bought insurance."],
+[632,"보호","boho","protection","아이를 보호해요.","ai-reul bohohaeyo.","Protect the child."],
+[633,"복사","boksa","copy","문서 복사했어요.","munseo boksahaesseoyo.","I copied the document."],
+[634,"복지","bokji","welfare","복지 정책 중요해요.","bokji jeongchaek jungyohaeyo.","Welfare policy is important."],
+[635,"본인","bonin","oneself","본인 확인해 주세요.","bonin hwaginhe juseyo.","Please verify your identity."],
+[636,"볼륨","bollyum","volume","볼륨 낮춰 주세요.","bollyum najchwo juseyo.","Lower the volume."],
+[637,"봉사","bongsa","volunteer service","봉사 활동해요.","bongsa hwaldonghaeyo.","I do volunteer work."],
+[638,"부담","budam","burden","부담 갖지 마세요.","budam gajji maseyo.","Don't feel burdened."],
+[639,"부모님","bumonim","parents","부모님께 전화해요.","bumonim-kke jeonhwahaeyo.","Call your parents."],
+[640,"부서","buseo","department","부서 이동했어요.","buseo idonghaesseoyo.","I moved departments."],
+[641,"부족","bujok","lack / shortage","인원이 부족해요.","inwon-i bujokhaeyo.","We're short-staffed."],
+[642,"부치다","buchida","to mail / send","편지 부쳤어요.","pyeonji buchyeosseoyo.","I mailed the letter."],
+[643,"분리","bunri","separation / sorting","쓰레기 분리해요.","sseuregi bunrihaeyo.","Sort the trash."],
+[644,"분명하다","bunmyeonghada","to be clear","의도가 분명해요.","uido-ga bunmyeonghaeyo.","The intention is clear."],
+[645,"분석","bunseok","analysis","데이터 분석했어요.","deiteo bunseokhaesseoyo.","I analyzed the data."],
+[646,"분위기","bunwigi","atmosphere","분위기 좋아요.","bunwigi joayo.","The atmosphere is nice."],
+[647,"불편","bulpyeon","inconvenience","불편 드려 죄송해요.","bulpyeon deuryeo joesonghaeyo.","Sorry for the inconvenience."],
+[648,"비교","bigyo","comparison","비교해 보세요.","bigyohae boseyo.","Try comparing."],
+[649,"비밀","bimil","secret","비밀로 해 주세요.","bimil-lo hae juseyo.","Keep it secret."],
+[650,"비용","biyong","cost","비용이 얼마나 돼요?","biyong-i eolmana dwaeyo?","How much does it cost?"],
+[651,"비자","bija","visa","비자 신청했어요.","bija sincheonghaesseoyo.","I applied for a visa."],
+[652,"비판","bipan","criticism","건설적 비판 환영해요.","geonseoljeok bipan hwanyeonghaeyo.","Constructive criticism is welcome."],
+[653,"사건","sageon","incident","사건 조사 중이에요.","sageon josa jung-ieyo.","The incident is under investigation."],
+[654,"사교적","sagyojeok","sociable","사교적이에요.","sagyojeok-ieyo.","I'm sociable."],
+[655,"사다","sada","to buy","선물 샀어요.","seonmul sasseoyo.","I bought a gift."],
+[656,"사라지다","sarajida","to disappear","문제가 사라졌어요.","munje-ga sarajyeosseoyo.","The problem disappeared."],
+[657,"사립","sarip","private (institution)","사립 학교예요.","sarip hakgyo-yeyo.","It's a private school."],
+[658,"사무실","samusil","office","사무실에 있어요.","samusil-e isseoyo.","I'm in the office."],
+[659,"사상","sasang","thought / ideology","사상을 공부해요.","sasang-eul gongbuhaeyo.","I study ideologies."],
+[660,"사실","sasil","fact","그건 사실이에요.","geugeon sasil-ieyo.","That's a fact."],
+[661,"사이","sai","between / relationship","사이가 좋아요.","sai-ga joayo.","They get along well."],
+[662,"사전적","sajeonjeok","dictionary-like / literal","사전적 의미예요.","sajeonjeok uimi-yeyo.","It's the dictionary meaning."],
+[663,"사촌","sachon","cousin","사촌 만나러 가요.","sachon mannareo gayo.","I'm going to meet my cousin."],
+[664,"사회","sahoe","society","사회 문제 중요해요.","sahoe munje jungyohaeyo.","Social issues are important."],
+[665,"산업","saneop","industry","산업 발전했어요.","saneop baljeonhaesseoyo.","The industry developed."],
+[666,"살리다","sallida","to save / revive","식물을 살렸어요.","sigmul-eul sallieosseoyo.","I revived the plant."],
+[667,"살펴보다","salpyeoboda","to examine","상태 살펴봐요.","sangtae salpyeobwayo.","Check the condition."],
+[668,"상담","sangdam","counseling","상담 예약했어요.","sangdam yeyakhaesseoyo.","I booked counseling."],
+[669,"상상","sangsang","imagination","상상해 보세요.","sangsanghae boseyo.","Imagine it."],
+[670,"상장","sangjang","certificate / listing","상장 받았어요.","sangjang badasseoyo.","I received a certificate."],
+[671,"상태","sangtae","condition","상태가 좋아요.","sangtae-ga joayo.","The condition is good."],
+[672,"상표","sangpyo","trademark","상표 등록했어요.","sangpyo deungnokhaesseoyo.","I registered the trademark."],
+[673,"상황","sanghwang","situation","상황을 설명해요.","sanghwang-eul seolmyeonghaeyo.","Explain the situation."],
+[674,"새벽","saebyeok","dawn / early morning","새벽에 일어나요.","saebyeok-e ireonayo.","I wake up at dawn."],
+[675,"생산","saengsan","production","생산량 늘었어요.","saengsan-ryang neureosseoyo.","Production increased."],
+[676,"생성","saengseong","creation","계정 생성했어요.","gyejeong saengseonghaesseoyo.","I created an account."],
+[677,"생태계","saengtaegye","ecosystem","생태계 보호해요.","saengtaegye bohohaeyo.","Protect the ecosystem."],
+[678,"서류","seoryu","paperwork","서류 제출했어요.","seoryu jechulhaesseoyo.","I submitted the paperwork."],
+[679,"서명","seomyeong","signature","서명해 주세요.","seomyeong-hae juseyo.","Please sign."],
+[680,"석사","seoksa","master's degree","석사 졸업했어요.","seoksa joreophaesseoyo.","I graduated with a master's."],
+[681,"선거","seongeo","election","선거에 참여해요.","seongeo-e chamyeohaeyo.","Participate in the election."],
+[682,"선택","seontaek","choice","선택하세요.","seontaek-haseyo.","Please choose."],
+[683,"선호","seonho","preference","선호도 조사했어요.","seonho-do josahaesseoyo.","We surveyed preferences."],
+[684,"설계","seolgye","design / planning","설계도 봐요.","seolgye-do bwayo.","Look at the blueprint."],
+[685,"설치","seolchi","installation","설치 완료했어요.","seolchi wanryohaesseoyo.","Installation completed."],
+[686,"설탕","seoltang","sugar","설탕 넣지 마세요.","seoltang neohji maseyo.","Don't add sugar."],
+[687,"설치하다","seolchihada","to install","프로그램 설치했어요.","peurogeuraem seolchihesseoyo.","I installed the program."],
+[688,"성공","seonggong","success","성공 축하해요.","seonggong chukahaeyo.","Congratulations on your success."],
+[689,"성별","seongbyeol","gender","성별을 선택하세요.","seongbyeol-eul seontaekhaseyo.","Choose your gender."],
+[690,"성장","seongjang","growth","성장했어요.","seongjanghaesseoyo.","I grew / It grew."],
+[691,"성적","seongjeok","grade / result","성적 발표했어요.","seongjeok balpyohaesseoyo.","The grades were announced."],
+[692,"세금","segum","tax","세금 납부했어요.","segum napbuhaesseoyo.","I paid the tax."],
+[693,"세부","sebu","detail","세부 사항 확인해요.","sebu sahang hwaginheyo.","Check the details."],
+[694,"세상","sesang","world","세상은 넓어요.","sesang-eun neolbayo.","The world is wide."],
+[695,"세탁","setak","laundry","세탁기 돌려요.","setakgi dollyeoyo.","Run the washing machine."],
+[696,"세트","seteu","set","세트로 사요.","seteu-ro sayo.","Buy it as a set."],
+[697,"소득","sodeuk","income","소득 올랐어요.","sodeuk ollasseoyo.","Income increased."],
+[698,"소비","sobi","consumption","소비 줄여요.","sobi juryeoyo.","Reduce consumption."],
+[699,"소비자","sobija","consumer","소비자 권리 중요해요.","sobija gwonri jungyohaeyo.","Consumer rights are important."],
+[700,"소속","sosok","affiliation","회사 소속이에요.","hoesa sosok-ieyo.","I belong to the company."],
+[701,"소통","sotong","communication","소통이 중요해요.","sotong-i jungyohaeyo.","Communication is important."],
+[702,"속도","sokdo","speed","속도 줄이세요.","sokdo juriseyo.","Slow down."],
+[703,"손해","sonhae","loss / damage","손해 보지 마세요.","sonhae boji maseyo.","Don't suffer a loss."],
+[704,"솔직하다","soljikada","to be honest","솔직하게 말해요.","soljikage malhaeyo.","Speak honestly."],
+[705,"수리","suri","repair","수리 맡겼어요.","suri matgyeosseoyo.","I left it for repair."],
+[706,"수익","suik","profit","수익 늘었어요.","suik neureosseoyo.","Profit increased."],
+[707,"수집","sujip","collection","우표 수집해요.","upyo sujiphaeyo.","I collect stamps."],
+[708,"수출","suchul","export","수출 증가했어요.","suchul jeungga haesseoyo.","Exports increased."],
+[709,"숙박","sukbak","lodging","숙박 예약했어요.","sukbak yeyakhaesseoyo.","I booked lodging."],
+[710,"순환","sunhwan","circulation","순환 시스템 좋아요.","sunhwan siseutem joayo.","The circulation system is good."],
+[711,"숫자","sutja","number","숫자 확인해요.","sutja hwaginheyo.","Check the number."],
+[712,"스케줄","seukejul","schedule","스케줄 확인했어요.","seukejul hwaginhaesseoyo.","I checked the schedule."],
+[713,"스마트폰","seumateupon","smartphone","스마트폰 꺼 주세요.","seumateupon kkeo juseyo.","Please turn off your smartphone."],
+[714,"스튜디오","seutyudio","studio","스튜디오 예약했어요.","seutyudio yeyakhaesseoyo.","I reserved the studio."],
+[715,"스타일","seutail","style","스타일이 멋져요.","seutail-i meotjyeoyo.","The style is cool."],
+[716,"스트레스","seuteureseu","stress","스트레스 풀어요.","seuteureseu puleoyo.","Relieve stress."],
+[717,"슬프다","seulpeuda","to be sad","오늘 슬퍼요.","oneul seulpeoyo.","I'm sad today."],
+[718,"승인","seungin","approval","승인 기다려요.","seungin gidaryeoyo.","Waiting for approval."],
+[719,"시급","sigeup","hourly wage","시급 올랐어요.","sigeup ollasseoyo.","The hourly wage increased."],
+[720,"시력","siryeok","eyesight","시력 검사했어요.","siryeok geomsa-haesseoyo.","I had an eye test."],
+[721,"시스템","siseutem","system","시스템 점검해요.","siseutem jeomgeomhaeyo.","Check the system."],
+[722,"시청","sicheong","viewing / city hall","시청에 가요.","sicheong-e gayo.","I go to city hall."],
+[723,"식물","sigmul","plant","식물 물 주세요.","sigmul mul juseyo.","Water the plant."],
+[724,"식사","siksa","meal","식사하러 가요.","siksa-hareo gayo.","Let's go eat."],
+[725,"신고","singo","report","사건 신고했어요.","sageon singohaesseoyo.","I reported the incident."],
+[726,"신뢰","sinroe","trust","신뢰가 중요해요.","sinroe-ga jungyohaeyo.","Trust is important."],
+[727,"신청","sincheong","application","신청서 제출했어요.","sincheongseo jechulhaesseoyo.","I submitted the application."],
+[728,"실력","sillyeok","skill / ability","실력 늘었어요.","sillyeok neureosseoyo.","My skill improved."],
+[729,"실행","silhaeng","execution","프로그램 실행해요.","peurogeuraem silhaenghaeyo.","Run the program."],
+[730,"심사","simsa","screening / judging","심사 통과했어요.","simsa tonggwa haesseoyo.","Passed the screening."],
+[731,"심장","simjang","heart (organ)","심장 박동 느껴요.","simjang bakdong neukkyeoyo.","I feel my heartbeat."],
+[732,"십분","sipbun","ten minutes","십분 기다려 주세요.","sipbun gidaryeo juseyo.","Wait ten minutes."],
+[733,"싸움","ssaum","fight","싸움 그만하세요.","ssaum geumanhaseyo.","Stop fighting."],
+[734,"쌓다","ssatda","to pile up / accumulate","경험을 쌓아요.","gyeongheom-eul ssahayo.","Accumulate experience."],
+[735,"쌍둥이","ssangdungi","twins","쌍둥이 있어요.","ssangdungi isseoyo.","I have twins."],
+[736,"쓰기","sseugi","writing / use","쓰기 연습해요.","sseugi yeonseuphaeyo.","Practice writing."],
+[737,"아끼다","akkida","to save / cherish","돈 아껴요.","don akkyeoyo.","Save money."],
+[738,"아름답게","areumdapge","beautifully","아름답게 꾸며요.","areumdapge kkumyeoyo.","Decorate beautifully."],
+[739,"아무","amu","any / nobody","아무도 없어요.","amudo eopseoyo.","Nobody is here."],
+[740,"아무래도","amuraedo","anyway / after all","아무래도 그래요.","amuraedo geuraeyo.","It seems so after all."],
+[741,"아무튼","amuteun","anyway","아무튼 고마워요.","amuteun gomawoyo.","Anyway, thanks."],
+[742,"아빠","appa","dad","아빠 보고 싶어요.","appa bogo sipeoyo.","I miss Dad."],
+[743,"아파트","apateu","apartment","아파트에 살아요.","apateu-e salayo.","I live in an apartment."],
+[744,"아프다","apeuda","to be sick / hurt","머리가 아파요.","meoriga apayo.","I have a headache."],
+[745,"안내문","annaemun","notice","안내문 읽어 주세요.","annaemun ilgeo juseyo.","Please read the notice."],
+[746,"안전벨트","anjeonbelteu","seatbelt","안전벨트 매세요.","anjeonbelteu maeseyo.","Fasten your seatbelt."],
+[747,"안정","anjeong","stability","안정 찾았어요.","anjeong chajasseoyo.","I found stability."],
+[748,"알림","allim","notification","알림 받았어요.","allim badasseoyo.","I received a notification."],
+[749,"암호","amho","password / code","암호 입력하세요.","amho ibryeokhaseyo.","Enter the password."],
+[750,"앞쪽","apjjok","front side","앞쪽으로 가세요.","apjjok-euro gaseyo.","Go to the front."],
+[751,"애완동물","aewandongmul","pet","애완동물 키워요.","aewandongmul kiwoyo.","I raise a pet."],
+[752,"액세서리","aekseseori","accessory","액세서리 샀어요.","aekseseori sasseoyo.","I bought accessories."],
+[753,"야간","yagan","night shift / nighttime","야간 근무해요.","yagan geunmuhaeyo.","I work the night shift."],
+[754,"약속시간","yaksoksigan","appointment time","약속시간 지켰어요.","yaksoksigan jikyeosseoyo.","I kept the appointment time."],
+[755,"양식","yangsik","form / Western food","양식 작성해요.","yangsik jakseonghaeyo.","Fill out the form."],
+[756,"양호하다","yanghohada","to be in good condition","상태가 양호해요.","sangtae-ga yanghohaeyo.","The condition is good."],
+[757,"어기다","eogida","to violate / break (a promise)","약속을 어겼어요.","yaksok-eul eogyeosseoyo.","I broke the promise."],
+[758,"어려움","eoryeoum","difficulty","어려움 있어요.","eoryeoum isseoyo.","There's a difficulty."],
+[759,"어린이","eorini","child","어린이 놀아요.","eorini norayo.","Children play."],
+[760,"어색하다","eosaekhada","to be awkward","분위기 어색해요.","bunwigi eosaekhaeyo.","The atmosphere is awkward."],
+[761,"어울리다","eoullida","to suit / match","그 옷이 어울려요.","geu ot-i eoullyeoyo.","That outfit suits you."],
+[762,"어제","eoje","yesterday","어제 뭐 했어요?","eoje mwo haesseoyo?","What did you do yesterday?"],
+[763,"언어","eoneo","language","언어 배우기 좋아요.","eoneo baeugi joayo.","Learning languages is good."],
+[764,"얼마","eolma","how much","얼마예요?","eolmayeyo?","How much is it?"],
+[765,"엄격하다","eomgyeokhada","to be strict","규칙이 엄격해요.","gyuchik-i eomgyeokhaeyo.","The rules are strict."],
+[766,"업무","eobmu","work task","업무 시작해요.","eobmu sijakhaeyo.","Start the task."],
+[767,"업데이트","eobdeiteu","update","업데이트 했어요.","eobdeiteu haesseoyo.","I updated it."],
+[768,"에너지","eneoji","energy","에너지 절약해요.","eneoji jeoryakhaeyo.","Save energy."],
+[769,"에어컨","eeokeon","air conditioner","에어컨 켰어요.","eeokeon kyeosseoyo.","I turned on the AC."],
+[770,"엘리베이터","ellibeiteo","elevator","엘리베이터 타요.","ellibeiteo tayo.","Take the elevator."],
+[771,"여권사진","yeogwon sajin","passport photo","여권사진 찍었어요.","yeogwon sajin jjigeosseoyo.","I took a passport photo."],
+[772,"여유","yeoyu","leisure / margin","여유 있어요.","yeoyu isseoyo.","I have time to spare."],
+[773,"역할","yeokhal","role","역할 분담했어요.","yeokhal bundamhaesseoyo.","We divided roles."],
+[774,"연기","yeongi","smoke / acting / postponement","연기했어요.","yeongi haesseoyo.","It was postponed."],
+[775,"연락처","yeollakcheo","contact info","연락처 알려 주세요.","yeollakcheo allyeo juseyo.","Please tell me your contact."],
+[776,"연속","yeonsok","continuous","연속으로 해요.","yeonsok-euro haeyo.","Do it continuously."],
+[777,"연습","yeonseup","practice","연습 많이 해요.","yeonseup mani haeyo.","Practice a lot."],
+[778,"연출","yeonchul","direction / production","연출 잘했어요.","yeonchul jalhaesseoyo.","The direction was good."],
+[779,"열람","yeollam","reading / inspection","열람 가능해요.","yeollam ganeunghaeyo.","Available for viewing."],
+[780,"열정","yeoljeong","passion","열정이 있어요.","yeoljeong-i isseoyo.","I have passion."],
+[781,"열흘","yeolheul","ten days","열흘 후에 만나요.","yeolheul hu-e mannayo.","See you in ten days."],
+[782,"영업","yeongeop","business operations","영업 시작했어요.","yeongeop sijakhaesseoyo.","Business started."],
+[783,"영수증","yeongsujeung","receipt","영수증 주세요.","yeongsujeung juseyo.","Please give the receipt."],
+[784,"영양","yeongyang","nutrition","영양 섭취하세요.","yeongyang seopchihaseyo.","Get proper nutrition."],
+[785,"영향","yeonghyang","influence","영향 받았어요.","yeonghyang badasseoyo.","It was influenced."],
+[786,"예금","yegeum","deposit","예금 했어요.","yegeum haesseoyo.","I made a deposit."],
+[787,"예약","yeyak","reservation","예약 확인했어요.","yeyak hwaginhaesseoyo.","I confirmed the reservation."],
+[788,"예상","yesang","expectation / prediction","예상보다 좋아요.","yesangboda joayo.","It's better than expected."],
+[789,"예술","yesul","art","예술 작품 좋아해요.","yesul jakpum joahaeyo.","I like artworks."],
+[790,"오락","orak","entertainment","오락 즐겨요.","orak jeulgyeoyo.","Enjoy entertainment."],
+[791,"오류","oryu","error","오류 수정했어요.","oryu sujinhaesseoyo.","I fixed the error."],
+[792,"오전","ojeon","morning (before noon)","오전에 만나요.","ojeon-e mannayo.","See you in the morning."],
+[793,"오후","ohu","afternoon","오후에 출발해요.","ohu-e chulbalhaeyo.","Leave in the afternoon."],
+[794,"온도계","ondogye","thermometer","온도계 확인해요.","ondogye hwaginheyo.","Check the thermometer."],
+[795,"올해","olhae","this year","올해 목표 있어요.","olhae mokpyo isseoyo.","I have goals this year."],
+[796,"완료","wanryo","completion","작업 완료했어요.","jageop wanryohaesseoyo.","The task is complete."],
+[797,"완성","wanseong","completion / perfection","프로젝트 완성했어요.","peurojekteu wanseonghaesseoyo.","I completed the project."],
+[798,"외출","oechul","going out","외출 중이에요.","oechul jung-ieyo.","I'm out."],
+[799,"외식","oesik","eating out","오늘 외식해요.","oneul oesikhaeyo.","We eat out today."],
+[800,"요금","yogeum","fare / fee","요금 얼마예요?","yogeum eolmayeyo?","How much is the fare?"],
+[801,"요청서","yocheongseo","request form","요청서 작성해 주세요.","yocheongseo jakseonghae juseyo.","Please fill out the request form."],
+[802,"용기","yonggi","courage / container","용기 내세요.","yonggi naeseyo.","Be brave."],
+[803,"우대","udae","preferential treatment","우대 혜택 있어요.","udae hyetaek isseoyo.","There are preferential benefits."],
+[804,"우수","usu","excellence","우수한 성과예요.","usu-han seonggwa-yeyo.","It's an excellent result."],
+[805,"우승","useung","victory","우승 축하해요.","useung chukahaeyo.","Congratulations on the win."],
+[806,"운임","unim","shipping fee","운임 얼마예요?","unim eolmayeyo?","How much is the shipping?"],
+[807,"운영","unyeong","operation / management","운영 잘하고 있어요.","unyeong jalhago isseoyo.","Management is going well."],
+[808,"원본","wonbon","original copy","원본 제출해 주세요.","wonbon jechulhae juseyo.","Please submit the original."],
+[809,"원인","wonin","cause","원인을 찾았어요.","wonin-eul chajasseoyo.","I found the cause."],
+[810,"원칙","wonchik","principle","원칙을 지켜요.","wonchik-eul jikyeoyo.","Follow the principle."],
+[811,"위반","wiban","violation","규칙 위반이에요.","gyuchik wiban-ieyo.","It's a rule violation."],
+[812,"위치","wichi","location","위치 알려 주세요.","wichi allyeo juseyo.","Tell me the location."],
+[813,"위치추적","wichi chujeok","location tracking","위치추적 활성화했어요.","wichi chujeok hwalseonghwa haesseoyo.","Location tracking is enabled."],
+[814,"위험성","wiheomseong","risk","위험성 있어요.","wiheomseong isseoyo.","There is a risk."],
+[815,"유관","yugwan","related (organization)","유관 기관에 문의해요.","yugwan gigwan-e munuihaeyo.","Contact the related agency."],
+[816,"유도","yudo","induction / guidance","유도해 주세요.","yudohae juseyo.","Please guide me."],
+[817,"유통","yutong","distribution","유통 과정 확인해요.","yutong gwajeong hwaginheyo.","Check the distribution process."],
+[818,"유학","yuhak","studying abroad","유학 준비해요.","yuhak junbihaeyo.","Prepare to study abroad."],
+[819,"유효","yuhyo","valid","유효 기간 확인해요.","yuhyo gigan hwaginheyo.","Check the validity period."],
+[820,"육아","yuga","childcare","육아 힘들어요.","yuga himdeureoyo.","Childcare is hard."],
+[821,"융합","yunghap","convergence / fusion","융합 기술 발전해요.","yunghap gisul baljeonhaeyo.","Convergence technology advances."],
+[822,"은행","eunhaeng","bank","은행에 가요.","eunhaeng-e gayo.","I go to the bank."],
+[823,"응급","eunggeup","emergency","응급실로 가요.","eunggeupsil-lo gayo.","Go to the emergency room."],
+[824,"의견","uigyeon","opinion","의견 주세요.","uigyeon juseyo.","Give your opinion."],
+[825,"의무","uimu","duty / obligation","의무를 다하세요.","uimu-reul dahaseyo.","Fulfill your duty."],
+[826,"의료","uiryo","medical care","의료 서비스 좋아요.","uiryo seobiseu joayo.","The medical service is good."],
+[827,"의존","uijon","dependence","의존 줄여요.","uijon juryeoyo.","Reduce dependence."],
+[828,"이관","igwan","transfer (administrative)","이관 처리했어요.","igwan chorihaesseoyo.","Transfer processed."],
+[829,"이동","idong","move / transfer","이동 중이에요.","idong jung-ieyo.","I'm on the move."],
+[830,"이력","iryeok","history / resume","이력서 제출했어요.","iryeokseo jechulhaesseoyo.","I submitted my resume."],
+[831,"이익","iik","profit / benefit","이익이 늘었어요.","iik-i neureosseoyo.","Profit increased."],
+[832,"이전","ijeon","previous / transfer","이전 버전으로 복원해요.","ijeon beojoneuro bogwonhaeyo.","Restore to the previous version."],
+[833,"이중","ijung","double / dual","이중 확인하세요.","ijung hwagin haseyo.","Double-check it."],
+[834,"인계","ingye","handover","인계 완료했어요.","ingye wanryohaesseoyo.","Handover completed."],
+[835,"인구","ingu","population","인구가 늘었어요.","ingu-ga neureosseoyo.","The population increased."],
+[836,"인도","indo","delivery / India","인도 서비스 좋아요.","indo seobiseu joayo.","Delivery service is good."],
+[837,"인력","inryeok","manpower","인력 충원했어요.","inryeok chungwonhaesseoyo.","We hired more staff."],
+[838,"인상","insang","impression / increase","인상률 높아요.","insangnyul nopayo.","The increase rate is high."],
+[839,"인식","insik","recognition","인식 개선 필요해요.","insik gaeseon piryohaeyo.","Awareness improvement is needed."],
+[840,"인수","insu","acquisition","인수 계약했어요.","insu gye-yakhaesseoyo.","We signed an acquisition contract."],
+[841,"인터뷰","inteobyu","interview","인터뷰 준비했어요.","inteobyu junbihaesseoyo.","I prepared for the interview."],
+[842,"인증","injeung","certification","인증서 발급했어요.","injeungseo balgeuphaesseoyo.","The certificate was issued."],
+[843,"일관성","ilgwanseong","consistency","일관성 유지하세요.","ilgwanseong yujihaseyo.","Maintain consistency."],
+[844,"일반","ilban","general","일반 문의하세요.","ilban munuihaseyo.","Make a general inquiry."],
+[845,"일정","iljeong","schedule","일정 확인해 주세요.","iljeong hwaginhae juseyo.","Please check the schedule."],
+[846,"일치","ilchi","match / agreement","내용이 일치해요.","naeyong-i ilchihaeyo.","The contents match."],
+[847,"임금","imgeum","wage","임금 인상했어요.","imgeum insanghaesseoyo.","Wages increased."],
+[848,"임대","imdae","rental","임대 계약했어요.","imdae gye-yakhaesseoyo.","I signed a rental contract."],
+[849,"임무","immu","mission","임무 수행했어요.","immu suhaenghaesseoyo.","I completed the mission."],
+[850,"입찰","ipchal","bidding","입찰 참여했어요.","ipchal chamyeohaesseoyo.","I participated in the bid."],
+[851,"자격","jagyeok","qualification","자격증 있어요?","jagyeokjeung isseoyo?","Do you have a certificate?"],
+[852,"자금","jageum","funds","자금 마련했어요.","jageum maryeonhaesseoyo.","I secured funds."],
+[853,"자막","jamak","subtitles","자막 켜 주세요.","jamak kyeo juseyo.","Turn on subtitles."],
+[854,"자발적","jabaljeok","voluntary","자발적 참여예요.","jabaljeok chamyeo-yeyo.","It's voluntary participation."],
+[855,"자산","jasan","asset","자산 관리해요.","jasan gwanrihaeyo.","Manage assets."],
+[856,"자세","jase","posture / detail","자세히 설명해 주세요.","jasehi seolmyeonghae juseyo.","Explain in detail."],
+[857,"자연","jayeon","nature","자연을 보호해요.","jayeon-eul bohohaeyo.","Protect nature."],
+[858,"자원","jawon","resources / volunteer","자원 봉사해요.","jawon bongsa haeyo.","Do volunteer work."],
+[859,"자율","jayul","autonomy","자율적으로 해요.","jayuljeogeuro haeyo.","Do it autonomously."],
+[860,"작업장","jageopjang","workshop","작업장 안전 중요해요.","jageopjang anjeon jungyohaeyo.","Workshop safety is important."],
+[861,"잔액","janaek","remaining balance","잔액 확인해 주세요.","janaek hwaginhae juseyo.","Check the remaining balance."],
+[862,"장기","janggi","long-term","장기 계획 세워요.","janggi gyehoek seweyo.","Make a long-term plan."],
+[863,"장비","jangbi","equipment","장비 점검했어요.","jangbi jeomgeomhaesseoyo.","I checked the equipment."],
+[864,"장애","jangae","disability / obstacle","장애인 지원해요.","jangaein jiweonhaeyo.","Support people with disabilities."],
+[865,"재고","jaego","inventory","재고 확인해요.","jaego hwaginheyo.","Check the inventory."],
+[866,"재난","jaenan","disaster","재난 대비하세요.","jaenan daebihaseyo.","Prepare for disasters."],
+[867,"재무","jaemu","finance","재무 보고서 봐요.","jaemu bogoseo bwayo.","Look at the financial report."],
+[868,"재생","jaesaeng","playback / recycle","동영상 재생해요.","dongyeongsang jaesaenghaeyo.","Play the video."],
+[869,"재정","jaejeong","budget / finance","재정 상태 좋아요.","jaejeong sangtae joayo.","The finances are good."],
+[870,"재판","jaepan","trial","재판 시작했어요.","jaepan sijakhaesseoyo.","The trial started."],
+[871,"재활용","jaehwalyong","recycling","재활용 분리해요.","jaehwalyong bunrihaeyo.","Separate recyclables."],
+[872,"저장","jeojang","save / storage","파일 저장했어요.","pail jeojanghaesseoyo.","I saved the file."],
+[873,"저축","jeochuk","savings","저축 시작했어요.","jeochuk sijakhaesseoyo.","I started saving."],
+[874,"전달","jeondal","deliver / convey","메시지 전달했어요.","mesiji jeondalhaesseoyo.","I delivered the message."],
+[875,"전략","jeollyak","strategy","전략 세웠어요.","jeollyak sewoesseoyo.","I made a strategy."],
+[876,"전력","jeollyeok","electricity / power","전력 사용 줄여요.","jeollyeok sayong juryeoyo.","Reduce electricity use."],
+[877,"전문","jeonmun","specialty / professional","전문가에게 문의해요.","jeonmunga-ege munuihaeyo.","Ask an expert."],
+[878,"전시","jeonsi","exhibition","전시회에 가요.","jeonsihoe-e gayo.","Go to the exhibition."],
+[879,"전송","jeonsong","send / transmission","파일 전송했어요.","pail jeonsonghaesseoyo.","I sent the file."],
+[880,"전압","jeonap","voltage","전압 확인해요.","jeonap hwaginheyo.","Check the voltage."],
+[881,"전용","jeonyong","exclusive use","전용 주차장 있어요.","jeonyong juchajang isseoyo.","There is exclusive parking."],
+[882,"전환","jeonhwan","conversion / switch","전환 버튼 눌러요.","jeonhwan beoteun nulleoyo.","Press the switch button."],
+[883,"절차","jeolcha","procedure","절차대로 진행해요.","jeolcha-daero jinhaenghaeyo.","Proceed according to procedure."],
+[884,"점검","jeomgeom","inspection","점검 완료했어요.","jeomgeom wanryohaesseoyo.","Inspection completed."],
+[885,"접근","jeopgeun","access","접근 권한 있어요.","jeopgeun gwonhan isseoyo.","You have access rights."],
+[886,"접수","jeopsu","reception / submission","접수 완료했어요.","jeopsu wanryohaesseoyo.","Submission completed."],
+[887,"정기","jeonggi","regular / periodic","정기 점검해요.","jeonggi jeomgeomhaeyo.","Do regular inspections."],
+[888,"정리","jeongri","organize","책상 정리해요.","chaeksang jeongrihaeyo.","Tidy the desk."],
+[889,"정책","jeongchaek","policy","정책 변경했어요.","jeongchaek byeongyeonghaesseoyo.","The policy changed."],
+[890,"정확성","jeonghwakseong","accuracy","정확성 확인해요.","jeonghwakseong hwaginheyo.","Verify accuracy."],
+[891,"제공","jegong","provide","서비스 제공해요.","seobiseu jegonghaeyo.","We provide the service."],
+[892,"제한","jehan","limit / restriction","제한 있어요.","jehan isseoyo.","There is a restriction."],
+[893,"제출","jechul","submit","서류 제출했어요.","seoryu jechulhaesseoyo.","I submitted the documents."],
+[894,"제조","jejo","manufacture","제품 제조했어요.","jaepum jejohaesseoyo.","We manufactured the product."],
+[895,"제휴","jehyu","partnership","제휴 계약했어요.","jehyu gye-yakhaesseoyo.","We signed a partnership."],
+[896,"조달","jodal","procurement","자재 조달했어요.","jajae jodalhaesseoyo.","Procured materials."],
+[897,"조사","josa","investigation / survey","조사 결과 나왔어요.","josa gyeolgwa nawasseoyo.","The survey results are out."],
+[898,"조정","jojeong","adjustment","볼륨 조정해요.","bollyum jojeonghaeyo.","Adjust the volume."],
+[899,"조직","jojik","organization","조직 개편했어요.","jojik gaepyeonhaesseoyo.","We reorganized."],
+[900,"존중","jonjung","respect","서로 존중해요.","seoro jonjunghaeyo.","Respect each other."],
+[901,"종료","jongnyo","termination / end","작업 종료했어요.","jageop jongnyohaesseoyo.","The task ended."],
+[902,"종합","jonghap","comprehensive","종합 결과 좋아요.","jonghap gyeolgwa joayo.","The overall result is good."],
+[903,"주관적","jugwanjeok","subjective","주관적 의견이에요.","jugwanjeok uigyeon-ieyo.","It's a subjective opinion."],
+[904,"주기적","jugijeok","periodic","주기적 점검 필요해요.","jugijeok jeomgeom piryohaeyo.","Periodic checks are needed."],
+[905,"주문서","jumunseo","order form","주문서 작성했어요.","jumunseo jakseonghaesseoyo.","I filled out the order form."],
+[906,"주요","juyo","main / major","주요 내용 확인해요.","juyo naeyong hwaginheyo.","Check the main points."],
+[907,"주장","jujang","claim / assertion","주장 근거 보여 주세요.","jujang geungeo boyeo juseyo.","Show evidence for the claim."],
+[908,"주차장","juchajang","parking lot","주차장 이용해요.","juchajang iyonghaeyo.","Use the parking lot."],
+[909,"준수","junsu","compliance","규칙 준수하세요.","gyuchik junsuhaseyo.","Follow the rules."],
+[910,"중개","junggae","brokerage","중개 수수료 있어요.","junggae susuryo isseoyo.","There is a brokerage fee."],
+[911,"중단","jungdan","suspension","작업 중단했어요.","jageop jungdanhaesseoyo.","The work was suspended."],
+[912,"중복","jungbok","duplication","중복 확인했어요.","jungbok hwaginhaesseoyo.","Checked for duplicates."],
+[913,"중요성","jungyoseong","importance","중요성 강조해요.","jungyoseong gangjohaeyo.","Emphasize the importance."],
+[914,"증가","jeungga","increase","판매 증가했어요.","panmae jeungga haesseoyo.","Sales increased."],
+[915,"증명","jeungmyeong","proof / certification","증명서 제출해 주세요.","jeungmyeongseo jechulhae juseyo.","Please submit the certificate."],
+[916,"지급","jigeup","payment / provision","지급 완료했어요.","jigeup wanryohaesseoyo.","Payment completed."],
+[917,"지능","jineung","intelligence","지능 향상해요.","jineung hyangsanghaeyo.","Intelligence improved."],
+[918,"지속","jisok","continuation","지속적으로 해요.","jisokjeogeuro haeyo.","Do it continuously."],
+[919,"지시","jisi","instruction","지시 따르세요.","jisi ttareuseyo.","Follow the instructions."],
+[920,"지연","jiyeon","delay","지연 발생했어요.","jiyeon balseonghaesseoyo.","A delay occurred."],
+[921,"지원금","jiweongeum","subsidy / support fund","지원금 신청했어요.","jiweongeum sincheonghaesseoyo.","I applied for support funds."],
+[922,"지적","jijeok","pointed out / critical","지적 감사합니다.","jijeok gamsahamnida.","Thank you for the feedback."],
+[923,"지침","jichim","guideline","지침 따라 주세요.","jichim ttara juseyo.","Follow the guideline."],
+[924,"직급","jikgeup","rank / position","직급 올랐어요.","jikgeup ollasseoyo.","I got promoted."],
+[925,"직무","jikmu","job duty","직무 수행해요.","jikmu suhaenghaeyo.","Perform your duties."],
+[926,"직원","jigwon","staff / employee","직원 모집해요.","jigwon mojibhaeyo.","We're hiring staff."],
+[927,"진단","jindan","diagnosis","진단 결과 나왔어요.","jindan gyeolgwa nawasseoyo.","The diagnosis is out."],
+[928,"진행","jinhaeng","progress","진행 상황 알려 주세요.","jinhaeng sanghwang allyeo juseyo.","Tell me the progress."],
+[929,"집중력","jipjungnyeok","concentration ability","집중력 높여요.","jipjungnyeok nopyeoyo.","Improve concentration."],
+[930,"차별","chabyeol","discrimination","차별 금지예요.","chabyeol geumji-yeyo.","Discrimination is prohibited."],
+[931,"참가","chamga","participation","참가 신청했어요.","chamga sincheonghaesseoyo.","I registered to participate."],
+[932,"참조","chamjo","reference","참조해 주세요.","chamjohae juseyo.","Please refer to it."],
+[933,"창고","changgo","warehouse","창고에 보관해요.","changgo-e bogwanhaeyo.","Store it in the warehouse."],
+[934,"창업","chang-eop","startup / founding","창업 준비해요.","chang-eop junbihaeyo.","Prepare to start a business."],
+[935,"책임","chaegim","responsibility","책임감 있어요.","chaegimgam isseoyo.","Have a sense of responsibility."],
+[936,"천연","cheonyeon","natural","천연 재료 사용해요.","cheonyeon jaeryo sayonghaeyo.","Use natural ingredients."],
+[937,"철저","cheoljeo","thoroughness","철저히 준비했어요.","cheoljeohi junbihaesseoyo.","Prepared thoroughly."],
+[938,"첨부","cheombu","attachment","파일 첨부했어요.","pail cheombuhaesseoyo.","I attached the file."],
+[939,"청구","cheonggu","claim / billing","청구서 보냈어요.","cheongguseo bonaesseoyo.","I sent the invoice."],
+[940,"청렴","cheongnyeom","integrity","청렴 중요해요.","cheongnyeom jungyohaeyo.","Integrity is important."],
+[941,"체계","chegye","system / framework","체계 정비했어요.","chegye jeongbihaesseoyo.","We organized the system."],
+[942,"체크","chekeu","check","체크해 주세요.","chekeuhae juseyo.","Please check."],
+[943,"초과","chogwa","excess","초과 비용 있어요.","chogwa biyong isseoyo.","There is an excess fee."],
+[944,"초안","choan","draft","초안 작성했어요.","choan jakseonghaesseoyo.","I wrote the draft."],
+[945,"초점","chojeom","focus","초점 맞춰요.","chojeom matchwoyo.","Focus it."],
+[946,"촉진","chokjin","promotion / acceleration","판매 촉진해요.","panmae chokjinhaeyo.","Promote sales."],
+[947,"최고","choego","the best / maximum","최고예요!","choego-yeyo!","It's the best!"],
+[948,"최저","choejeo","the lowest / minimum","최저 가격이에요.","choejeo gagyeok-ieyo.","It's the lowest price."],
+[949,"최종","choejong","final","최종 결정했어요.","choejong gyeoljeonghaesseoyo.","Final decision made."],
+[950,"추가","chuga","addition","추가 비용 있어요.","chuga biyong isseoyo.","There is an additional fee."],
+[951,"추적","chujeok","tracking","배송 추적해요.","baesong chujeokhaeyo.","Track the delivery."],
+[952,"축적","chukjeok","accumulation","데이터 축적해요.","deiteo chukjeokhaeyo.","Accumulate data."],
+[953,"출력","chullyeok","printout / output","문서 출력해요.","munseo chullyeokhaeyo.","Print the document."],
+[954,"출처","chulcheo","source","출처 밝혀 주세요.","chulcheo balkhyeo juseyo.","Please cite the source."],
+[955,"취급","chwigup","handling","취급 주의하세요.","chwigup jusihaseyo.","Handle with care."],
+[956,"취소","chwiso","cancel","예약 취소했어요.","yeyak chwisohaesseoyo.","I canceled the reservation."],
+[957,"측정","cheukjeong","measurement","온도 측정해요.","ondo cheukjeonghaeyo.","Measure the temperature."],
+[958,"측면","cheukmyeon","aspect / side","다른 측면도 봐요.","dareun cheukmyeondo bwayo.","Look at other aspects too."],
+[959,"치료","chilyo","treatment","치료 시작했어요.","chilyo sijakhaesseoyo.","Treatment started."],
+[960,"친환경","chinhwangyeong","eco-friendly","친환경 제품 사용해요.","chinhwangyeong jaepum sayonghaeyo.","Use eco-friendly products."],
+[961,"침해","chimhae","infringement","저작권 침해예요.","jeojakkwon chimhae-yeyo.","It's a copyright infringement."],
+[962,"칭찬","chingchan","praise","칭찬 고마워요.","chingchan gomawoyo.","Thanks for the compliment."],
+[963,"카테고리","kategori","category","카테고리 선택하세요.","kategori seontaekhaseyo.","Choose a category."],
+[964,"캠페인","kaempein","campaign","캠페인 시작했어요.","kaempein sijakhaesseoyo.","The campaign started."],
+[965,"컨설팅","keonseolting","consulting","컨설팅 받았어요.","keonseolting badasseoyo.","I received consulting."],
+[966,"코스트","koseuteu","cost","코스트 줄여요.","koseuteu juryeoyo.","Reduce costs."],
+[967,"콘텐츠","kontencheu","content","콘텐츠 제작해요.","kontencheu jejakhaeyo.","Create content."],
+[968,"클레임","keulleim","claim / complaint","클레임 접수했어요.","keulleim jeopsuhaesseoyo.","We received a complaint."],
+[969,"타당성","tadangseong","feasibility","타당성 검토해요.","tadangseong geomtohaeyo.","Review feasibility."],
+[970,"타입","taip","type","타입 선택하세요.","taip seontaekhaseyo.","Choose the type."],
+[971,"탁월하다","tagwolhada","to be excellent","성능이 탁월해요.","seongneung-i tagwolhaeyo.","The performance is excellent."],
+[972,"탄력","tanryeok","flexibility / resilience","탄력적으로 대응해요.","tanryeokjeogeuro daeeunghaeyo.","Respond flexibly."],
+[973,"탈퇴","taltoe","withdrawal","회원 탈퇴했어요.","hoewon taltoehaesseoyo.","I withdrew my membership."],
+[974,"태도","taedo","attitude","태도 바꿔요.","taedo bakkwoyo.","Change your attitude."],
+[975,"택배","taegbae","courier delivery","택배 도착했어요.","taegbae dochaghaesseoyo.","The parcel arrived."],
+[976,"토론","toron","debate / discussion","토론 참여했어요.","toron chamyeohaesseoyo.","I joined the discussion."],
+[977,"통계","tonggye","statistics","통계 자료 봐요.","tonggye jaryo bwayo.","Look at the statistics."],
+[978,"통합","tonghap","integration","시스템 통합했어요.","siseutem tonghaphaesseoyo.","We integrated the systems."],
+[979,"퇴직","toejik","retirement / resignation","퇴직 준비해요.","toejik junbihaeyo.","Prepare for retirement."],
+[980,"투명성","tumyeongseong","transparency","투명성 확보해요.","tumyeongseong hwakbohaeyo.","Ensure transparency."],
+[981,"투자","tuja","investment","투자 결정했어요.","tuja gyeoljeonghaesseoyo.","I decided to invest."],
+[982,"투표율","tupyoyul","voter turnout","투표율 높아요.","tupyoyul nopayo.","Voter turnout is high."],
+[983,"특성","teukseong","characteristic","특성 파악했어요.","teukseong paakhaesseoyo.","I identified the characteristics."],
+[984,"특허","teukheo","patent","특허 출원했어요.","teukheo chulwonhaesseoyo.","I filed a patent."],
+[985,"파악","paak","grasp / understand","상황 파악했어요.","sanghwang paakhaesseoyo.","I understood the situation."],
+[986,"판단","pandan","judgment","판단이 필요해요.","pandan-i piryohaeyo.","A judgment is needed."],
+[987,"판매량","panmaeryang","sales volume","판매량 늘었어요.","panmaeryang neureosseoyo.","Sales volume increased."],
+[988,"포괄적","pogwaljeok","comprehensive","포괄적 검토했어요.","pogwaljeok geomtohaesseoyo.","Reviewed comprehensively."],
+[989,"포인트","pointeu","point / reward point","포인트 적립했어요.","pointeu jeogriphaesseoyo.","I earned points."],
+[990,"표준","pyojun","standard","표준 준수하세요.","pyojun junsuhaseyo.","Follow the standard."],
+[991,"품질","pumjil","quality","품질 검사했어요.","pumjil geomsa-haesseoyo.","We inspected the quality."],
+[992,"품목","pummok","item / product","품목 추가했어요.","pummok chuga haesseoyo.","Added an item."],
+[993,"필터","pilteo","filter","필터 교체했어요.","pilteo gyochehaesseoyo.","I replaced the filter."],
+[994,"필요성","piryo-seong","necessity","필요성 설명해요.","piryo-seong seolmyeonghaeyo.","Explain the necessity."],
+[995,"하이라이트","hairaiteu","highlight","하이라이트 표시했어요.","hairaiteu pyosihesseoyo.","I marked the highlights."],
+[996,"합리적","hamnijeok","rational","합리적 판단해요.","hamnijeok pandanhaeyo.","Make a rational decision."],
+[997,"합법","hapbeop","legal","합법 절차예요.","hapbeop jeolcha-yeyo.","It's a legal procedure."],
+[998,"합의","hapui","agreement","합의 도출했어요.","hapui dochulhaesseoyo.","We reached an agreement."],
+[999,"해석","haeseok","interpretation","해석이 달라요.","haeseok-i dallayo.","The interpretation differs."],
+[1000,"해제","haeje","release","계정 해제했어요.","gyejeong haejehaesseoyo.","I deactivated the account."]
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let curIdx = 0;
+let playing = false;
+let speed = 1;
+let cardSpeaking = null;
+let abUtter = null;
+
+const synth = window.speechSynthesis;
+
+// ═══════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════
+// AUDIOBOOK
+// ═══════════════════════════════════════════════════════
+function updateNowPlaying(idx) {
+  const d = DATA[idx];
+  document.getElementById('np-num').textContent = `Word ${d[0]} of 1000`;
+  document.getElementById('np-korean').textContent = d[1];
+  document.getElementById('np-roman').textContent = d[2];
+  document.getElementById('np-eng').textContent = d[3];
+  document.getElementById('np-sent-kr').textContent = d[4];
+  document.getElementById('np-sent-en').textContent = d[6];
+  document.getElementById('ring-cur').textContent = d[0];
+  document.getElementById('t-cur').textContent = d[0];
+  // Ring arc
+  const pct = d[0] / 1000;
+  const offset = 283 - (pct * 283);
+  document.getElementById('ring-arc').style.strokeDashoffset = offset;
+  // Progress bar
+  document.getElementById('track-fill').style.width = (pct * 100) + '%';
+  // Queue highlight
+  document.querySelectorAll('.q-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  // Scroll queue item into view
+  const qi = document.querySelector('.q-item.active');
+  if (qi) qi.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+function buildQueue() {
+  const list = document.getElementById('queue-list');
+  list.innerHTML = DATA.map((d, i) =>
+    `<div class="q-item${i===0?' active':''}" onclick="jumpTo(${i})">
+      <span class="q-num">${d[0]}</span>
+      <span class="q-kr">${d[1]}</span>
+      <span class="q-en">${d[3]}</span>
+    </div>`
+  ).join('');
+}
+
+function jumpTo(idx) {
+  stopAB();
+  curIdx = idx;
+  updateNowPlaying(idx);
+}
+
+function seekTo(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  jumpTo(Math.floor(pct * 1000));
+}
+
+function speakWord(idx, onDone) {
+  if (!synth) return onDone && onDone();
+  synth.cancel();
+  const d = DATA[idx];
+  const includeSent = document.getElementById('chk-sent').checked;
+  const includeRoman = document.getElementById('chk-roman').checked;
+
+  const parts = [];
+  // Korean word
+  const u1 = new SpeechSynthesisUtterance(d[1]);
+  u1.lang = 'ko-KR'; u1.rate = speed * 0.9;
+  parts.push(u1);
+  // Romanization (English voice)
+  if (includeRoman) {
+    const u2 = new SpeechSynthesisUtterance(d[2]);
+    u2.lang = 'en-US'; u2.rate = speed;
+    parts.push(u2);
+  }
+  // English meaning
+  const u3 = new SpeechSynthesisUtterance(d[3]);
+  u3.lang = 'en-US'; u3.rate = speed;
+  parts.push(u3);
+  // Korean sentence
+  if (includeSent) {
+    const u4 = new SpeechSynthesisUtterance(d[4]);
+    u4.lang = 'ko-KR'; u4.rate = speed * 0.85;
+    parts.push(u4);
+    // English sentence
+    const u5 = new SpeechSynthesisUtterance(d[6]);
+    u5.lang = 'en-US'; u5.rate = speed;
+    parts.push(u5);
+  }
+
+  // Chain utterances
+  for (let i = 0; i < parts.length - 1; i++) {
+    const next = parts[i + 1];
+    parts[i].onend = () => synth.speak(next);
+  }
+  parts[parts.length - 1].onend = onDone || null;
+
+  abUtter = parts[0];
+  synth.speak(parts[0]);
+}
+
+function playNext() {
+  if (!playing) return;
+  if (curIdx >= DATA.length - 1) {
+    stopAB();
+    setStatus('Done');
+    return;
+  }
+  curIdx++;
+  updateNowPlaying(curIdx);
+  speakWord(curIdx, playNext);
+}
+
+function togglePlay() {
+  if (playing) {
+    stopAB();
+  } else {
+    startAB();
+  }
+}
+
+function startAB() {
+  playing = true;
+  setPlayIcon(true);
+  setStatus('playing', 'Playing');
+  speakWord(curIdx, playNext);
+}
+
+function stopAB() {
+  playing = false;
+  synth.cancel();
+  setPlayIcon(false);
+  setStatus('', 'Paused');
+}
+
+function prevWord() { stopAB(); if (curIdx > 0) { curIdx--; updateNowPlaying(curIdx); } }
+function nextWord() { stopAB(); if (curIdx < 999) { curIdx++; updateNowPlaying(curIdx); } }
+function skipWords(n) { stopAB(); curIdx = Math.max(0, Math.min(999, curIdx + n)); updateNowPlaying(curIdx); }
+
+function setSpeed(s, btn) {
+  speed = s;
+  document.querySelectorAll('.spd').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function setPlayIcon(isPlaying) {
+  const icon = document.getElementById('play-icon');
+  if (isPlaying) {
+    icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+  } else {
+    icon.innerHTML = '<polygon points="5,3 19,12 5,21"/>';
+  }
+}
+
+function setStatus(cls, text) {
+  const el = document.getElementById('ab-status');
+  el.className = 'status ' + cls;
+  el.textContent = text || 'Ready';
+}
+
+// ═══════════════════════════════════════════════════════
+// STUDY CARDS
+// ═══════════════════════════════════════════════════════
+function buildCards(filtered) {
+  const grid = document.getElementById('cards-grid');
+  const items = filtered || DATA;
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="no-results">No words found. Try a different search.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(d => `
+    <div class="card">
+      <div class="card-num">#${d[0]}</div>
+      <div class="card-kr">${d[1]}</div>
+      <div class="card-roman">${d[2]}</div>
+      <div class="card-eng">${d[3]}</div>
+      <div class="card-divider"></div>
+      <div class="card-sent-kr">${d[4]}</div>
+      <div class="card-sent-en">${d[6]}</div>
+      <div class="card-btns">
+        <button class="card-btn" id="btn-w-${d[0]}" onclick="speakCard(${d[0]-1},'word')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Word
+        </button>
+        <button class="card-btn" id="btn-s-${d[0]}" onclick="speakCard(${d[0]-1},'sentence')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Sentence
+        </button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('shown-count').textContent = items.length;
+}
+
+function speakCard(idx, mode) {
+  synth.cancel();
+  const d = DATA[idx];
+  const num = d[0];
+  // Reset previous
+  if (cardSpeaking) {
+    const prev = document.getElementById('btn-w-' + cardSpeaking);
+    const prevS = document.getElementById('btn-s-' + cardSpeaking);
+    if (prev) prev.classList.remove('speaking');
+    if (prevS) prevS.classList.remove('speaking');
+  }
+  cardSpeaking = num;
+  const btnId = mode === 'word' ? 'btn-w-' + num : 'btn-s-' + num;
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.add('speaking');
+
+  const parts = [];
+  if (mode === 'word') {
+    const u1 = new SpeechSynthesisUtterance(d[1]);
+    u1.lang = 'ko-KR'; u1.rate = 0.85;
+    const u2 = new SpeechSynthesisUtterance(d[3]);
+    u2.lang = 'en-US'; u2.rate = 0.95;
+    parts.push(u1, u2);
+  } else {
+    const u1 = new SpeechSynthesisUtterance(d[4]);
+    u1.lang = 'ko-KR'; u1.rate = 0.82;
+    const u2 = new SpeechSynthesisUtterance(d[6]);
+    u2.lang = 'en-US'; u2.rate = 0.95;
+    parts.push(u1, u2);
+  }
+  for (let i = 0; i < parts.length - 1; i++) {
+    parts[i].onend = () => synth.speak(parts[i+1]);
+  }
+  parts[parts.length-1].onend = () => {
+    if (btn) btn.classList.remove('speaking');
+    cardSpeaking = null;
+  };
+  synth.speak(parts[0]);
+}
+
+function filterCards() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  if (!q) { buildCards(); return; }
+  const filtered = DATA.filter(d =>
+    d[1].includes(q) ||
+    d[2].toLowerCase().includes(q) ||
+    d[3].toLowerCase().includes(q) ||
+    d[4].includes(q) ||
+    d[6].toLowerCase().includes(q)
+  );
+  buildCards(filtered);
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+buildQueue();
+buildCards();
+updateNowPlaying(0);
+</script>
+</body>
+</html>

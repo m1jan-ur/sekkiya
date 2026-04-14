@@ -1,2 +1,0 @@
-# sekkiya
-language app
